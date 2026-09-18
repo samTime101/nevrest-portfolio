@@ -13,6 +13,7 @@ const founders = [
   { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder / Product', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
   { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder / Engineering' },
   { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder / Design', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
+  { initials: 'SA', name: 'Sayuz Acharya', role: 'Co-founder' },
 ]
 
 function Mark({ small = false }) {

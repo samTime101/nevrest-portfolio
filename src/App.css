@@ -64,6 +64,7 @@ h2 { font: 700 clamp(39px, 5.4vw, 72px)/1.02 var(--sans); letter-spacing: -.07em
 .portrait { width: 82px; height: 82px; border-radius: 50%; display: grid; place-items: center; font: 16px var(--mono); background: #9b90ed; border: 1px solid rgba(16,17,19,.18); }
 .founder--2 .portrait { background: var(--coral); }
 .founder--3 .portrait { background: var(--lime); }
+.founder--4 .portrait { background: var(--violet); }
 .founder h3 { font: 700 21px var(--sans); letter-spacing: -.04em; }
 .founder p { margin-top: 6px; font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: #5d587c; }
 .linkedin-link { margin-left: auto; font: 500 12px var(--mono); display: inline-flex; align-items: center; color: #5d587c; transition: color .2s, transform .2s; }

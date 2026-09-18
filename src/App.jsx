@@ -1,7 +1,12 @@
 import './App.css'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import logo from './assets/logo.png'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const services = [
   { number: '01', title: 'Product engineering', text: 'Web platforms and mobile products built for the pace of real businesses.' },
@@ -26,10 +31,37 @@ function Arrow() {
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const pageRef = useRef(null)
   const closeMenu = () => setMenuOpen(false)
 
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) return undefined
+
+    const context = gsap.context(() => {
+      const entrance = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      entrance.from('.nav', { y: -20, opacity: 0, duration: 0.7 })
+        .from('.eyebrow', { y: 24, opacity: 0, duration: 0.7 }, '-=.35')
+        .from('h1', { y: 45, opacity: 0, duration: 1.1 }, '-=.4')
+        .from('.hero-bottom', { y: 25, opacity: 0, duration: 0.8 }, '-=.55')
+        .from('.hero-grid', { scale: 0.7, opacity: 0, duration: 1.2 }, '-=.8')
+
+      gsap.utils.toArray('.statement-grid, .section-heading, .service, .founders-intro, .founder, .contact-inner').forEach((element) => {
+        gsap.from(element, {
+          y: 45,
+          opacity: 0,
+          duration: 0.85,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: element, start: 'top 84%', once: true },
+        })
+      })
+    }, pageRef)
+
+    return () => context.revert()
+  }, [])
+
   return (
-    <main>
+    <main ref={pageRef}>
       <section className="hero" id="top">
         <nav className="nav shell">
           <a className="wordmark" href="#top" onClick={closeMenu}><Mark small /><span>NEVREST</span></a>
@@ -51,9 +83,9 @@ function App() {
 
       <section className="statement" id="about"><div className="shell statement-grid"><p className="section-label">The short version</p><div><h2>Technology should feel<br /><span>like a clear next step.</span></h2><p className="body-copy">From Kathmandu, we partner with people solving meaningful problems. We bring sharp thinking, careful craft, and the technical range to make the leap from ambition to momentum.</p></div><div className="signal signal--lime">N<span>↗</span></div></div></section>
 
-      <section className="services" id="work"><div className="shell"><div className="section-heading"><p className="section-label">What we do</p><p className="heading-aside">Small team. Serious range.</p></div><div className="service-list">{services.map((service) => <article className="service" key={service.number}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><span className="service-arrow"><Arrow /></span></article>)}</div></div></section>
+      <section className="services" id="work"><div className="shell"><div className="section-heading"><p className="section-label">What we do</p><p className="heading-aside">Small team. Serious range.</p></div><div className="service-list">{services.map((service) => <motion.article className="service" key={service.number} whileHover={{ x: 8, backgroundColor: 'rgba(213,246,106,.06)' }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><span className="service-arrow"><Arrow /></span></motion.article>)}</div></div></section>
 
-      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Three points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <div className={`founder founder--${index + 1}`} key={founder.name}><div className="portrait"><span>{founder.initials}</span></div><div><h3>{founder.name}</h3><p>{founder.role}</p></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</div>)}</div></div></section>
+      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Three points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <motion.div className={`founder founder--${index + 1}`} key={founder.name} whileHover={{ x: 8 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><motion.div className="portrait" whileHover={{ rotate: 8, scale: 1.06 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }}><span>{founder.initials}</span></motion.div><div><h3>{founder.name}</h3><p>{founder.role}</p></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</motion.div>)}</div></div></section>
 
       <section className="contact" id="contact"><div className="shell contact-inner"><p className="section-label">Have a problem worth solving?</p><h2>Let&apos;s make<br /><span>something useful.</span></h2><a className="contact-link" href="mailto:hello@nevrest.tech">hello@nevrest.tech <Arrow /></a><div className="contact-mark"><Mark /></div></div></section>
 

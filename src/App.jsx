@@ -79,6 +79,7 @@ function App() {
             <a href="#work" onClick={closeMenu}>What we do</a>
             <a href="#how-it-works" onClick={closeMenu}>How it works</a>
             <a href="#about" onClick={closeMenu}>About</a>
+            <a href="https://www.linkedin.com/company/143899606/" target="_blank" rel="noreferrer" onClick={closeMenu}>LinkedIn <Arrow /></a>
             <a href="#contact" className="nav-cta" onClick={closeMenu}>Start a conversation <Arrow /></a>
           </div>
         </nav>

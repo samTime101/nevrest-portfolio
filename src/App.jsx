@@ -1,6 +1,7 @@
 import './App.css'
 
 import { useState } from 'react'
+import logo from './assets/logo.png'
 
 const services = [
   { number: '01', title: 'Product engineering', text: 'Web platforms and mobile products built for the pace of real businesses.' },
@@ -9,9 +10,9 @@ const services = [
 ]
 
 const founders = [
-  { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder / Product' },
+  { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder / Product', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
   { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder / Engineering' },
-  { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder / Design' },
+  { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder / Design', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
 ]
 
 function Mark({ small = false }) {
@@ -51,11 +52,11 @@ function App() {
 
       <section className="services" id="work"><div className="shell"><div className="section-heading"><p className="section-label">What we do</p><p className="heading-aside">Small team. Serious range.</p></div><div className="service-list">{services.map((service) => <article className="service" key={service.number}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><span className="service-arrow"><Arrow /></span></article>)}</div></div></section>
 
-      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Three points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <div className={`founder founder--${index + 1}`} key={founder.name}><div className="portrait"><span>{founder.initials}</span></div><div><h3>{founder.name}</h3><p>{founder.role}</p></div></div>)}</div></div></section>
+      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Three points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <div className={`founder founder--${index + 1}`} key={founder.name}><div className="portrait"><span>{founder.initials}</span></div><div><h3>{founder.name}</h3><p>{founder.role}</p></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</div>)}</div></div></section>
 
       <section className="contact" id="contact"><div className="shell contact-inner"><p className="section-label">Have a problem worth solving?</p><h2>Let&apos;s make<br /><span>something useful.</span></h2><a className="contact-link" href="mailto:hello@nevrest.tech">hello@nevrest.tech <Arrow /></a><div className="contact-mark"><Mark /></div></div></section>
 
-      <footer className="footer shell"><a className="wordmark" href="#top"><Mark small /><span>NEVREST</span></a><span>Technology, with intent.</span><span>Kathmandu, Nepal / 2026</span></footer>
+      <footer className="footer shell"><a className="footer-logo" href="#top"><img src={logo} alt="Nevrest" /></a><span>Technology, with intent.</span><span>Kathmandu, Nepal / 2026</span></footer>
     </main>
   )
 }

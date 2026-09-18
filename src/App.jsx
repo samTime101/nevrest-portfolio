@@ -69,6 +69,7 @@ function App() {
           <div className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
             <a href="#work" onClick={closeMenu}>What we do</a>
             <a href="#about" onClick={closeMenu}>About</a>
+            <a href="#founders" onClick={closeMenu}>Founders</a>
             <a href="#contact" className="nav-cta" onClick={closeMenu}>Start a conversation <Arrow /></a>
           </div>
         </nav>
@@ -87,7 +88,7 @@ function App() {
 
       <section className="contact" id="contact"><div className="shell contact-inner"><p className="section-label">Have a problem worth solving?</p><h2>Let&apos;s make<br /><span>something useful.</span></h2><a className="contact-link" href="mailto:contact@nevrestlabs.com">contact@nevrestlabs.com <Arrow /></a><div className="contact-mark"><Mark /></div></div></section>
 
-      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Four points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <motion.div className={`founder founder--${index + 1}`} key={founder.name} whileHover={{ x: 8 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><motion.div className="portrait" whileHover={{ rotate: 8, scale: 1.06 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }}><span>{founder.initials}</span></motion.div><div><h3>{founder.name}</h3></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</motion.div>)}</div></div></section>
+      <section className="founders" id="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Four points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <motion.div className={`founder founder--${index + 1}`} key={founder.name} whileHover={{ x: 8 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><motion.div className="portrait" whileHover={{ rotate: 8, scale: 1.06 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }}><span>{founder.initials}</span></motion.div><div><h3>{founder.name}</h3></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</motion.div>)}</div></div></section>
 
       <footer className="footer shell"><a className="footer-logo" href="#top"><img src={logo} alt="Nevrest Labs" /></a><span>Technology, with intent.</span><span>Kathmandu, Nepal / 2026</span></footer>
     </main>

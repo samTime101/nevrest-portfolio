@@ -1,6 +1,8 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "nevresttech",
-  "compatibility_date": "2026-09-18",
-  "pages_build_output_dir": "./dist"
+  "name": "nevrest",
+  "compatibility_date": "2026-09-15",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
 }

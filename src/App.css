@@ -54,13 +54,13 @@ h2 { font: 700 clamp(39px, 5.4vw, 72px)/1.02 var(--sans); letter-spacing: -.07em
 .service h3 { font: 600 clamp(20px, 2.5vw, 31px) var(--sans); letter-spacing: -.045em; }
 .service p { color: #92928c; line-height: 1.55; font-size: 14px; max-width: 270px; }
 .service-arrow { color: var(--lime); font-size: 23px; justify-self: end; }
-.founders { padding: 135px 0 150px; background: var(--violet); color: var(--ink); }
+.founders { padding: 135px 0 150px; background: var(--paper); color: var(--ink); }
 .founders .shell { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; }
-.founders .section-label { color: #5f5a7e; }
+.founders .section-label { color: #706f6a; font-weight: 700; }
 .founders-intro h2 { margin-top: 47px; }
-.founders-intro h2 span { color: #6f6a95; }
-.founder-list { border-top: 1px solid rgba(16,17,19,.25); }
-.founder { display: flex; align-items: center; gap: 24px; padding: 24px 0; border-bottom: 1px solid rgba(16,17,19,.25); }
+.founders-intro h2 span { color: #8c899c; }
+.founder-list { border-top: 1px solid rgba(16,17,19,.18); }
+.founder { display: flex; align-items: center; gap: 24px; padding: 24px 0; border-bottom: 1px solid rgba(16,17,19,.18); }
 .portrait { width: 82px; height: 82px; border-radius: 50%; display: grid; place-items: center; font: 16px var(--mono); background: #9b90ed; border: 1px solid rgba(16,17,19,.18); }
 .founder--2 .portrait { background: var(--coral); }
 .founder--3 .portrait { background: var(--lime); }

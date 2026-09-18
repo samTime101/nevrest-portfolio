@@ -15,10 +15,10 @@ const services = [
 ]
 
 const founders = [
-  { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder / Product', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
-  { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder / Engineering' },
-  { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder / Design', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
-  { initials: 'SA', name: 'Sayuz Acharya', role: 'Co-founder' },
+  { initials: 'SB', name: 'Sworup Bastola', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
+  { initials: 'SR', name: 'Samip Regmi', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' },
+  { initials: 'DD', name: 'Diwas Dahal', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
+  { initials: 'SA', name: 'Sayuz Acharya' },
 ]
 
 function Mark({ small = false }) {
@@ -64,7 +64,7 @@ function App() {
     <main ref={pageRef}>
       <section className="hero" id="top">
         <nav className="nav shell">
-          <a className="wordmark" href="#top" onClick={closeMenu}><Mark small /><span>NEVREST</span></a>
+          <a className="wordmark" href="#top" onClick={closeMenu}><Mark small /><span>NEVREST LABS</span></a>
           <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button>
           <div className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
             <a href="#work" onClick={closeMenu}>What we do</a>
@@ -76,7 +76,7 @@ function App() {
         <div className="hero-content shell">
           <div className="eyebrow"><span className="status-dot" /> Kathmandu, Nepal <span className="eyebrow-line" /> Independent technology studio</div>
           <h1>Build what<br /><span>moves people</span><strong>.</strong></h1>
-          <div className="hero-bottom"><p className="hero-intro">Nevrest is a technology company helping ambitious teams turn thoughtful ideas into products people return to.</p><a className="circle-link" href="#work" aria-label="Explore what we do"><Arrow /></a></div>
+          <div className="hero-bottom"><p className="hero-intro">Nevrest Labs is a technology company helping ambitious teams turn thoughtful ideas into products people return to.</p><a className="circle-link" href="#work" aria-label="Explore what we do"><Arrow /></a></div>
         </div>
         <div className="hero-grid" aria-hidden="true" /><div className="hero-note">N / 01<br /><span>Ideas to impact</span></div>
       </section>
@@ -85,11 +85,11 @@ function App() {
 
       <section className="services" id="work"><div className="shell"><div className="section-heading"><p className="section-label">What we do</p><p className="heading-aside">Small team. Serious range.</p></div><div className="service-list">{services.map((service) => <motion.article className="service" key={service.number} whileHover={{ x: 8, backgroundColor: 'rgba(213,246,106,.06)' }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><span className="service-arrow"><Arrow /></span></motion.article>)}</div></div></section>
 
-      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Three points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <motion.div className={`founder founder--${index + 1}`} key={founder.name} whileHover={{ x: 8 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><motion.div className="portrait" whileHover={{ rotate: 8, scale: 1.06 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }}><span>{founder.initials}</span></motion.div><div><h3>{founder.name}</h3><p>{founder.role}</p></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</motion.div>)}</div></div></section>
-
       <section className="contact" id="contact"><div className="shell contact-inner"><p className="section-label">Have a problem worth solving?</p><h2>Let&apos;s make<br /><span>something useful.</span></h2><a className="contact-link" href="mailto:hello@nevrest.tech">hello@nevrest.tech <Arrow /></a><div className="contact-mark"><Mark /></div></div></section>
 
-      <footer className="footer shell"><a className="footer-logo" href="#top"><img src={logo} alt="Nevrest" /></a><span>Technology, with intent.</span><span>Kathmandu, Nepal / 2026</span></footer>
+      <section className="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>Four points<br /><span>of view.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <motion.div className={`founder founder--${index + 1}`} key={founder.name} whileHover={{ x: 8 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><motion.div className="portrait" whileHover={{ rotate: 8, scale: 1.06 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }}><span>{founder.initials}</span></motion.div><div><h3>{founder.name}</h3></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</motion.div>)}</div></div></section>
+
+      <footer className="footer shell"><a className="footer-logo" href="#top"><img src={logo} alt="Nevrest Labs" /></a><span>Technology, with intent.</span><span>Kathmandu, Nepal / 2026</span></footer>
     </main>
   )
 }

@@ -9,106 +9,74 @@ import logo from './assets/logo.png'
 gsap.registerPlugin(ScrollTrigger)
 
 const services = [
-  { number: '01', title: 'Product engineering', text: 'Web platforms and mobile products built around your users, goals, and technical requirements.' },
-  { number: '02', title: 'Digital systems', text: 'Clear, connected software that turns complex operations into simple, useful action.' },
-  { number: '03', title: 'Technology strategy', text: 'A practical technical path from your idea to a durable product your business can grow with.' },
+  { number: '01', title: 'Web development', text: 'Modern, responsive web applications designed to grow with the business.' },
+  { number: '02', title: 'Mobile development', text: 'Thoughtful iOS and Android experiences with a product-first approach.' },
+  { number: '03', title: 'AI & machine learning', text: 'Practical AI systems, LLM applications, intelligent workflows, and automation.' },
+  { number: '04', title: 'Custom software', text: 'Business systems, dashboards, internal tools, and purpose-built applications.' },
+  { number: '05', title: 'Backend & APIs', text: 'Secure APIs, databases, integrations, authentication, and scalable architecture.' },
+  { number: '06', title: 'Automation', text: 'Connected workflows, AI agents, and process improvements that remove busywork.' },
+  { number: '07', title: 'UI/UX & product design', text: 'Clear interfaces and product experiences shaped around the people using them.' },
+  { number: '08', title: 'Cloud & DevOps', text: 'Deployment, CI/CD, monitoring, and dependable production infrastructure.' },
 ]
 
 const process = [
-  { number: '01', title: 'Listen', text: 'You tell us what you are trying to solve, who it is for, and what success should look like.' },
-  { number: '02', title: 'Plan', text: 'We shape the scope, priorities, technical direction, timeline, and next practical step.' },
-  { number: '03', title: 'Design', text: 'We turn the idea into clear user flows, interfaces, and an experience people can understand.' },
-  { number: '04', title: 'Build', text: 'Our team develops, tests, and refines the software with regular communication throughout.' },
-  { number: '05', title: 'Launch', text: 'We help get the product into the hands of real users and make the transition smooth.' },
-  { number: '06', title: 'Improve', text: 'We keep learning from the product and help you decide what to build next.' },
+  { number: '01', title: 'Discover', text: 'Understand the problem, business goals, users, and what success needs to look like.' },
+  { number: '02', title: 'Plan', text: 'Define the scope, architecture, technology, and product direction before we build.' },
+  { number: '03', title: 'Build', text: 'Design, develop, integrate, and test in close collaboration with your team.' },
+  { number: '04', title: 'Launch', text: 'Deploy with care and make the transition to production clear and dependable.' },
+  { number: '05', title: 'Improve', text: 'Monitor, learn, optimise, and keep making the product more useful over time.' },
 ]
 
-const founders = [
-  { initials: 'SB', name: 'Sworup Bastola', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
-  { initials: 'SR', name: 'Samip Regmi', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' },
-  { initials: 'DD', name: 'Diwas Dahal', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
-  { initials: 'SA', name: 'Sayuz Acharya' },
+const technologies = [
+  ['Frontend', 'React', 'Next.js', 'TypeScript', 'Tailwind CSS'], ['Backend', 'Node.js', 'Python', 'FastAPI', 'Flask'], ['Data', 'PostgreSQL', 'MySQL', 'MongoDB', 'Firebase'], ['AI', 'OpenAI', 'Gemini', 'LangChain', 'Hugging Face', 'PyTorch'], ['Infrastructure', 'Docker', 'Linux', 'Nginx', 'Cloudflare', 'Vercel'],
 ]
 
-function Mark({ small = false }) {
-  return <span className={`brand-mark ${small ? 'brand-mark--small' : ''}`} aria-hidden="true"><i /><b /><em /></span>
-}
+const industries = ['Education', 'Healthcare', 'FinTech', 'E-Commerce', 'SaaS', 'Hospitality', 'Real Estate', 'Logistics', 'Media', 'Startups', 'Professional services']
+const team = [
+  { initials: 'SB', name: 'Sworup Bastola', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' }, { initials: 'SR', name: 'Samip Regmi', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' }, { initials: 'DD', name: 'Diwas Dahal', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' }, { initials: 'SA', name: 'Sayuz Acharya' },
+]
+const reasons = [
+  ['01', 'Engineering-first', 'We make deliberate technical decisions that support the product long after launch.'], ['02', 'Practical AI', 'We use AI where it creates real leverage, not just where it makes a good headline.'], ['03', 'Built to evolve', 'Clean systems and thoughtful architecture make the next change less expensive.'], ['04', 'Clear collaboration', 'Direct communication, visible progress, and honest conversations throughout.'], ['05', 'Fast learning loops', 'We focus work on the riskiest assumptions and iterate with purpose.'], ['06', 'Support after launch', 'A launch is the beginning of the product journey, not the end of ours.'],
+]
+const faqs = [
+  ['What kind of projects do you build?', 'We build web platforms, mobile applications, internal tools, custom software, AI-enabled products, and automation systems.'], ['Can you build custom AI solutions?', 'Yes. We can help identify a useful AI opportunity, design the right workflow, and build it into a reliable product or internal system.'], ['Do you work with startups?', 'Yes. We work with early-stage teams as well as established businesses, from product direction through production delivery.'], ['Can you work with an existing development team?', 'Absolutely. We can extend a team, take ownership of a defined product area, or provide focused technical and product support.'], ['How long does a typical project take?', 'The answer depends on scope and complexity. We define a practical delivery plan during discovery before committing to a timeline.'], ['Do you provide maintenance after launch?', 'Yes. We can provide monitoring, ongoing improvements, technical support, and a plan for the product’s next stage.'], ['What technologies do you use?', 'We select tools around the product’s needs, with experience across modern web, mobile, backend, AI, data, and cloud technologies.'],
+]
 
-function Arrow() {
-  return <span className="arrow" aria-hidden="true">↗</span>
-}
+function Mark({ small = false }) { return <span className={`brand-mark ${small ? 'brand-mark--small' : ''}`} aria-hidden="true"><i /><b /><em /></span> }
+function Arrow() { return <span className="arrow" aria-hidden="true">↗</span> }
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [openFaq, setOpenFaq] = useState(0)
   const pageRef = useRef(null)
   const closeMenu = () => setMenuOpen(false)
-
   useEffect(() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduceMotion) return undefined
-
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
     const context = gsap.context(() => {
       const entrance = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      entrance.from('.nav', { y: -20, opacity: 0, duration: 0.7 })
-        .from('.eyebrow', { y: 24, opacity: 0, duration: 0.7 }, '-=.35')
-        .from('h1', { y: 45, opacity: 0, duration: 1.1 }, '-=.4')
-        .from('.hero-bottom', { y: 25, opacity: 0, duration: 0.8 }, '-=.55')
-        .from('.hero-grid', { scale: 0.7, opacity: 0, duration: 1.2 }, '-=.8')
-
-      gsap.utils.toArray('.statement-grid, .section-heading, .service, .process-step, .audience, .why-grid, .founders-intro, .founder, .contact-inner').forEach((element) => {
-        gsap.from(element, {
-          y: 45,
-          opacity: 0,
-          duration: 0.85,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: element, start: 'top 84%', once: true },
-        })
-      })
+      entrance.from('.nav', { y: -20, opacity: 0, duration: 0.7 }).from('.eyebrow', { y: 24, opacity: 0, duration: 0.7 }, '-=.35').from('h1', { y: 45, opacity: 0, duration: 1.1 }, '-=.4').from('.hero-bottom', { y: 25, opacity: 0, duration: 0.8 }, '-=.55').from('.hero-stack', { scale: 0.8, opacity: 0, duration: 1.1 }, '-=.85')
+      gsap.utils.toArray('.statement-grid, .section-heading, .service, .process-step, .tech-row, .project-card, .reason, .faq-item, .contact-inner').forEach((element) => gsap.from(element, { y: 45, opacity: 0, duration: 0.85, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 84%', once: true } }))
     }, pageRef)
-
     return () => context.revert()
   }, [])
 
-  return (
-    <main ref={pageRef}>
-      <section className="hero" id="top">
-        <nav className="nav shell">
-          <a className="wordmark" href="#top" onClick={closeMenu}><Mark small /><span>NEVREST LABS</span></a>
-          <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button>
-          <div className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
-            <a href="#work" onClick={closeMenu}>What we do</a>
-            <a href="#how-it-works" onClick={closeMenu}>How it works</a>
-            <a href="#about" onClick={closeMenu}>About</a>
-            <a href="https://www.linkedin.com/company/143899606/" target="_blank" rel="noreferrer" onClick={closeMenu}>LinkedIn <Arrow /></a>
-            <a href="#contact" className="nav-cta" onClick={closeMenu}>Start a conversation <Arrow /></a>
-          </div>
-        </nav>
+  return <main ref={pageRef}>
+    <section className="hero" id="top"><nav className="nav shell"><a className="wordmark" href="#top" onClick={closeMenu}><Mark small /><span>NEVREST LABS</span></a><button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation"><span /><span /></button><div className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}><a href="#top" onClick={closeMenu}>Home</a><a href="#services" onClick={closeMenu}>Services</a><a href="#projects" onClick={closeMenu}>Projects</a><a href="#about" onClick={closeMenu}>About</a><a href="#process" onClick={closeMenu}>Process</a><a href="#contact" onClick={closeMenu}>Contact</a><a href="#contact" className="nav-cta" onClick={closeMenu}>Start a project <Arrow /></a></div></nav><div className="hero-content shell"><div className="eyebrow"><span className="status-dot" /> Kathmandu, Nepal <span className="eyebrow-line" /> Building digital products that matter</div><h1>Build what<br /><span>moves people</span><strong>.</strong></h1><div className="hero-bottom"><p className="hero-intro">From web and mobile applications to AI systems, automation, and custom software — we turn meaningful ideas into reliable digital products.</p><a className="circle-link" href="#contact" aria-label="Start a project"><Arrow /></a></div></div><div className="hero-stack" aria-label="Our core capabilities"><span>WEB</span><span>AI</span><span>PRODUCT</span><span>SYSTEMS</span></div><div className="hero-note">N / 01<br /><span>Ideas to impact</span></div></section>
 
-        <div className="hero-content shell">
-          <div className="eyebrow"><span className="status-dot" /> Kathmandu, Nepal <span className="eyebrow-line" /> Independent software company</div>
-          <h1>Build what<br /><span>moves people</span><strong>.</strong></h1>
-          <div className="hero-bottom"><p className="hero-intro">Nevrest Labs builds thoughtful software for clients who want to turn a meaningful idea, problem, or opportunity into a useful digital product.</p><a className="circle-link" href="#contact" aria-label="Start a conversation"><Arrow /></a></div>
-        </div>
-        <div className="hero-grid" aria-hidden="true" /><div className="hero-note">N / 01<br /><span>Ideas to impact</span></div>
-      </section>
-
-      <section className="statement" id="about"><div className="shell statement-grid"><p className="section-label">The short version</p><div><h2>Technology should feel<br /><span>like a clear next step.</span></h2><p className="body-copy">From Kathmandu, we partner with people solving meaningful problems. We bring sharp thinking, careful craft, and the technical range to make the leap from ambition to momentum.</p></div><div className="signal signal--lime">N<span>↗</span></div></div></section>
-
-      <section className="services" id="work"><div className="shell"><div className="section-heading"><p className="section-label">What we do</p><p className="heading-aside">Small team. Serious range.</p></div><h2 className="section-title">Software built for<br /><span>real businesses.</span></h2><div className="service-list">{services.map((service) => <motion.article className="service" key={service.number} whileHover={{ x: 8, backgroundColor: 'rgba(213,246,106,.06)' }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><span className="service-arrow"><Arrow /></span></motion.article>)}</div></div></section>
-
-      <section className="process" id="how-it-works"><div className="shell"><div className="section-heading"><p className="section-label">How it works</p><p className="heading-aside">A clear path from idea to launch.</p></div><div className="process-grid">{process.map((step) => <article className="process-step" key={step.number}><span className="service-number">{step.number}</span><h3>{step.title}</h3><p>{step.text}</p></article>)}</div></div></section>
-
-      <section className="audiences"><div className="shell audience-grid"><article id="clients" className="audience audience--companies"><p className="section-label">For clients</p><h2>Bring us the problem.<br /><span>We&apos;ll build the software.</span></h2><p>Whether you have a clear product brief or only the beginning of an idea, we can help shape the right technical path and build something useful.</p><ul><li>Web platforms and mobile applications</li><li>Product design and user experience</li><li>Business tools and digital systems</li><li>Technical direction and ongoing improvement</li></ul><a className="text-link" href="#contact">Tell us what you&apos;re building <Arrow /></a></article><article className="audience audience--approach"><p className="section-label">Our approach</p><h2>Thoughtful work.<br /><span>Useful outcomes.</span></h2><p>We keep the process direct, collaborative, and grounded in the people who will use the product. No unnecessary complexity. No software for its own sake.</p><div className="approach-tags"><span>Understand</span><span>Design</span><span>Build</span><span>Improve</span></div><a className="text-link" href="#contact">Start a conversation <Arrow /></a></article></div></section>
-
-      <section className="why-nepal"><div className="shell why-grid"><p className="section-label">Our philosophy</p><div><h2>Geography should not<br /><span>define opportunity.</span></h2><p className="body-copy">From Kathmandu, we work with clients wherever they are. The important thing is not where the software is built, but whether it solves the right problem for the people who need it.</p></div></div></section>
-
-      <section className="contact" id="contact"><div className="shell contact-inner"><p className="section-label">Have a problem worth solving?</p><h2>Let&apos;s make<br /><span>something useful.</span></h2><a className="contact-link" href="mailto:contact@nevrestlabs.com">contact@nevrestlabs.com <Arrow /></a><div className="contact-mark"><Mark /></div></div></section>
-
-      {/* <section className="founders" id="founders"><div className="shell"><div className="founders-intro"><p className="section-label">The people behind it</p><h2>People<br /><span>behind it.</span></h2></div><div className="founder-list">{founders.map((founder, index) => <motion.div className={`founder founder--${index + 1}`} key={founder.name} whileHover={{ x: 8 }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><motion.div className="portrait" whileHover={{ rotate: 8, scale: 1.06 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }}><span>{founder.initials}</span></motion.div><div><h3>{founder.name}</h3></div>{founder.linkedin && <a className="linkedin-link" href={founder.linkedin} target="_blank" rel="noreferrer" aria-label={`Open ${founder.name}'s LinkedIn profile`}>in <Arrow /></a>}</motion.div>)}</div></div></section> */}
-
-      <footer className="footer shell"><a className="footer-logo" href="#top"><img src={logo} alt="Nevrest Labs" /></a><span>Software, with intent.</span><span>Kathmandu, Nepal / 2026</span></footer>
-    </main>
-  )
+    <section className="proof"><div className="shell proof-grid"><p className="section-label">Built with intent</p><div><strong>Web</strong><span>Platforms & products</span></div><div><strong>Mobile</strong><span>Native-feeling experiences</span></div><div><strong>AI</strong><span>Useful intelligence</span></div><div><strong>Systems</strong><span>Built to scale</span></div></div></section>
+    <section className="statement" id="about"><div className="shell statement-grid"><p className="section-label">Who we are</p><div><h2>Technology, strategy &<br /><span>execution — together.</span></h2><p className="body-copy">Nevrest Labs is a technology-focused company helping businesses turn ideas into reliable digital products. We pair engineering discipline with user-focused design so the things we build are useful today and maintainable tomorrow.</p><div className="principle-list"><span>Engineering-first approach</span><span>Modern technology</span><span>Practical AI integration</span><span>Scalable architecture</span><span>User-focused design</span></div></div><div className="signal signal--lime">N<span>↗</span></div></div></section>
+    <section className="services" id="services"><div className="shell"><div className="section-heading"><p className="section-label">What we build</p><p className="heading-aside">Small team. Serious range.</p></div><h2 className="section-title">Software built for<br /><span>real businesses.</span></h2><div className="service-list">{services.map((service) => <motion.article className="service" key={service.number} whileHover={{ x: 8, backgroundColor: 'rgba(213,246,106,.06)' }} transition={{ type: 'spring', stiffness: 260, damping: 24 }}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><a className="service-arrow" href="#contact" aria-label={`Explore ${service.title}`}><Arrow /></a></motion.article>)}</div></div></section>
+    <section className="tech"><div className="shell"><div className="section-heading"><p className="section-label">Our toolkit</p><p className="heading-aside">Chosen for the job, not the trend.</p></div><h2 className="tech-title">Built with modern<br /><span>technology.</span></h2><div className="tech-list">{technologies.map(([group, ...items]) => <div className="tech-row" key={group}><p>{group}</p><div>{items.map((item) => <span key={item}>{item}</span>)}</div></div>)}</div></div></section>
+    <section className="projects" id="projects"><div className="shell"><div className="section-heading"><p className="section-label">Selected work</p><p className="heading-aside">Case studies are added as products launch.</p></div><h2 className="section-title">Things we&apos;re<br /><span>building.</span></h2><div className="project-grid"><article className="project-card project-card--large"><div className="project-art"><i /><b /><em /></div><p className="project-kicker">Featured project / In progress</p><h3>Your project could be next.</h3><p>We are building a considered portfolio of products with the teams behind them. Get in touch to see what a good first release could look like.</p><div className="project-tags"><span>Product strategy</span><span>Engineering</span><span>AI</span></div><a className="text-link" href="#contact">Talk about your project <Arrow /></a></article><article className="project-card project-card--note"><p className="section-label">Portfolio note</p><h3>Real work deserves a real story.</h3><p>We do not publish invented case studies or make up outcome metrics. Project stories and measurable results will appear here with our clients&apos; permission.</p></article></div></div></section>
+    <section className="industries"><div className="shell"><div className="section-heading"><p className="section-label">Where we help</p><p className="heading-aside">Technology that adapts to the problem.</p></div><h2>Technology for different<br /><span>industries.</span></h2><div className="industry-list">{industries.map((industry) => <span key={industry}>{industry}</span>)}</div></div></section>
+    <section className="process" id="process"><div className="shell"><div className="section-heading"><p className="section-label">How we work</p><p className="heading-aside">A clear path from idea to launch.</p></div><div className="process-grid">{process.map((step) => <article className="process-step" key={step.number}><span className="service-number">{step.number}</span><h3>{step.title}</h3><p>{step.text}</p></article>)}</div></div></section>
+    <section className="why-nepal"><div className="shell why-grid"><p className="section-label">Why teams choose us</p><div><h2>Good software starts<br /><span>with good judgement.</span></h2><div className="reason-grid">{reasons.map(([number, title, text]) => <article className="reason" key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></div></section>
+    <section className="team"><div className="shell"><div className="section-heading"><p className="section-label">Meet the team</p><p className="heading-aside">Small, hands-on, and focused.</p></div><div className="team-grid">{team.map((member) => <article className="team-member" key={member.name}><div className="portrait"><span>{member.initials}</span></div><h3>{member.name}</h3><p>Founding team / Nevrest Labs</p>{member.linkedin && <a className="text-link" href={member.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a>}</article>)}</div></div></section>
+    <section className="testimonials"><div className="shell testimonial-inner"><p className="section-label">What our clients say</p><h2>Built on work<br /><span>we can stand behind.</span></h2><p className="body-copy">Client testimonials will live here once we have permission to share them. Until then, we prefer to let a thoughtful conversation and the work itself do the talking.</p></div></section>
+    <section className="faq"><div className="shell faq-grid"><div><p className="section-label">Questions, answered</p><h2>Before we<br /><span>get started.</span></h2></div><div>{faqs.map(([question, answer], index) => <article className={`faq-item ${openFaq === index ? 'faq-item--open' : ''}`} key={question}><button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}><span>{question}</span><b>{openFaq === index ? '−' : '+'}</b></button><div><p>{answer}</p></div></article>)}</div></div></section>
+    <section className="contact" id="contact"><div className="shell contact-inner"><div className="contact-copy"><p className="section-label">Have an idea?</p><h2>Let&apos;s build<br /><span>something useful.</span></h2><p>Tell us what you&apos;re trying to build and we&apos;ll help turn the idea into a real product.</p><a className="contact-link" href="mailto:contact@nevrestlabs.com">contact@nevrestlabs.com <Arrow /></a></div><div className="contact-aside"><p>Start with the problem, the opportunity, or the beginning of an idea.</p><a className="circle-link" href="mailto:contact@nevrestlabs.com" aria-label="Email Nevrest Labs"><Arrow /></a></div><div className="contact-mark"><Mark /></div></div></section>
+    <footer className="footer shell"><a className="footer-logo" href="#top"><img src={logo} alt="Nevrest Labs" /></a><div className="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a><a href="https://www.linkedin.com/company/143899606/" target="_blank" rel="noreferrer">LinkedIn</a></div><span>Software, with intent.</span><span>© 2026 Nevrest Labs</span></footer>
+  </main>
 }
 
 export default App

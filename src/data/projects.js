@@ -62,7 +62,7 @@ export const projects = [
     year: '2025 — Present',
     screenshotNote: 'Screenshots coming soon.',
     cover: '/work/nepse-market.png',
-    videoId: 'wz4SCfzD7Yk',
+    videoId: 'QMlrXjQg-Yg',
     videoCaption: 'NEPSE Terminal walkthrough',
     shots: [
       {

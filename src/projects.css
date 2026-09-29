@@ -83,6 +83,11 @@
 }
 .mock-node { flex: none; border: 1px solid rgba(213,246,106,.45); background: rgba(20,21,24,.92); padding: 8px 10px; font: 600 9px var(--mono); color: #d7d7d2; display: flex; flex-direction: column; gap: 3px; }
 .mock-node b { font-size: 8px; letter-spacing: 0.1em; color: var(--lime); }
+.work-art--compliance-compass { background: radial-gradient(120% 100% at 50% 0%, #0f2a26 0%, #141518 62%), #141518; }
+.work-art--compliance-compass::after { content: ''; position: absolute; width: 300px; height: 300px; right: -80px; top: -80px; background: #2dd4bf; opacity: 0.20; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.mock-canvas--map { justify-content: center; gap: 12px; padding: 22px 12px; }
+.mock-pin { font-size: 30px; line-height: 1; color: var(--lime); text-shadow: 0 0 18px rgba(213,246,106,.6); animation: pulse 2s ease-in-out infinite; }
+.mock-verdict { font: 700 11px var(--mono); letter-spacing: 0.14em; color: var(--lime); border: 1px solid rgba(213,246,106,.55); padding: 9px 12px; background: rgba(213,246,106,.08); }
 .work-no { position: absolute; top: 8px; right: 18px; z-index: 1; font: 800 120px/1 var(--sans); letter-spacing: -0.08em; color: transparent; -webkit-text-stroke: 1px rgba(242,241,236,.28); }
 .work-status {
   display: inline-flex; align-items: center; gap: 8px;
@@ -162,6 +167,7 @@
 .case-hero--lime { background: radial-gradient(90% 70% at 85% 0%, rgba(213,246,106,.16), transparent 60%), var(--ink); }
 .case-hero--violet { background: radial-gradient(90% 70% at 85% 0%, rgba(178,165,255,.22), transparent 60%), var(--ink); }
 .case-hero--amber { background: radial-gradient(90% 70% at 85% 0%, rgba(245,158,11,.20), transparent 60%), var(--ink); }
+.case-hero--teal { background: radial-gradient(90% 70% at 85% 0%, rgba(45,212,191,.18), transparent 60%), var(--ink); }
 .case-hero-inner { padding-top: 40px; padding-bottom: 64px; position: relative; z-index: 1; }
 .case-back { display: inline-flex; color: #8e8e88; font: 500 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 34px; }
 .case-back:hover { color: var(--lime); }

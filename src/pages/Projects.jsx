@@ -6,7 +6,7 @@ import { ArtCover } from '../components/Shots.jsx'
 import { projects } from '../data/projects.js'
 import '../projects.css'
 
-const glyphs = { omedate: '◉', 'nepse-terminal': '▲', onecompiler: '>_', 'automation-suite': '↻', 'mail-studio': '@', justodo: '//' }
+const glyphs = { omedate: '◉', 'nepse-terminal': '▲', onecompiler: '>_', 'automation-suite': '↻', 'mail-studio': '@', justodo: '//', 'compliance-compass': '◎' }
 
 function OmedateMock() {
   return (
@@ -105,6 +105,21 @@ function JustoMock() {
       <div className="mock-bar">
         <span className="mock-pill">Ctrl+Shift+6 · stamp HUID</span>
         <span className="mock-pill mock-pill--ghost">.todos/todos.json ✓</span>
+      </div>
+    </div>
+  )
+}
+
+function CompassMock() {
+  return (
+    <div className="work-mock" aria-hidden="true">
+      <div className="mock-canvas mock-canvas--map">
+        <span className="mock-pin">◉</span>
+        <span className="mock-verdict">ALLOWED</span>
+      </div>
+      <div className="mock-bar">
+        <span className="mock-pill mock-pill--green">CAAN ✓</span>
+        <span className="mock-pill mock-pill--ghost">Home Affairs · permits 2/3</span>
       </div>
     </div>
   )
@@ -220,6 +235,7 @@ export default function Projects() {
                     {project.slug === 'automation-suite' && <AutomationMock />}
                     {project.slug === 'mail-studio' && <MailMock />}
                     {project.slug === 'justodo' && <JustoMock />}
+                    {project.slug === 'compliance-compass' && <CompassMock />}
                   </ArtCover>
                   <span className="work-open">
                     Open case <Arrow />

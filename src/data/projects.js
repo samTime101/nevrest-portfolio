@@ -109,7 +109,7 @@ export const projects = [
   },
   {
     slug: 'onecompiler',
-    no: '06',
+    no: '07',
     hidden: true,
     status: 'In progress',
     kicker: 'Developer tools — Education',
@@ -289,6 +289,49 @@ export const projects = [
     ],
     extras: ['Marketplace + VSIX install', 'F5 debug launch config', 'Lint + type-check + tests'],
     next: 'TODOs you can reference, search, and actually finish.',
+  },
+  {
+    slug: 'compliance-compass',
+    no: '06',
+    status: 'Live',
+    kicker: 'Web / GIS — Shipped',
+    title: 'Compliance Compass',
+    tagline: 'Know before you fly.',
+    short:
+      'Drone flight-planning and regulatory tool for Nepal — drop a pin and get an instant Allowed / Restricted / Prohibited verdict with the exact permits required.',
+    description:
+      "Compliance Compass is a drone flight-planning and regulatory tool designed for Nepal's airspace. It combines geospatial mapping (GIS) with local aviation laws to help pilots quickly determine where they can legally fly. Instead of requiring users to manually cross-reference scattered government PDFs, the software calculates flight permissions automatically based on the drone's weight, the pilot's nationality, and the exact flight coordinates.",
+    videoId: 'Xgo42VmmqaQ',
+    videoCaption: 'Compliance Compass walkthrough — pin-drop clearance in action',
+    tags: ['GIS', 'Drones', 'RegTech', 'Nepal'],
+    stack: ['React', 'GIS mapping', 'Geospatial data', 'Rules engine'],
+    accent: 'teal',
+    year: 'Shipped — in use',
+    stats: [
+      { value: '3', label: 'Verdicts — allowed / restricted / prohibited' },
+      { value: '4+', label: 'Zone domains mapped' },
+      { value: '0', label: 'PDFs to cross-reference' },
+    ],
+    highlights: [
+      {
+        title: 'Pin-drop verdicts',
+        text: 'Drop a pin anywhere in Nepal and get a clear flight clearance status — Allowed, Restricted, or Prohibited — in seconds.',
+      },
+      {
+        title: 'Every restricted zone, mapped',
+        text: 'Active aerodromes, military perimeters, national parks, and UNESCO heritage sites layered into one map.',
+      },
+      {
+        title: 'Rules engine, not guesswork',
+        text: 'Drone weight, pilot nationality, and exact coordinates evaluated against current civil aviation requirements and data privacy laws.',
+      },
+      {
+        title: 'Permit checklists',
+        text: 'Step-by-step list of the specific permits required from agencies like CAAN and the Ministry of Home Affairs.',
+      },
+    ],
+    extras: ['Commercial surveyors + logistics', 'Researchers + recreational pilots', 'Pre-flight legal compliance'],
+    next: 'Built so pilots handle pre-flight compliance safely and efficiently.',
   },
 ]
 

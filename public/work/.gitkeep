@@ -1,0 +1,9 @@
+Drop product screenshots here with these exact filenames:
+
+  nepse-backtest.png  -> NEPSE backtest equity + strategy returns (Model Lab)
+  nepse-market.png    -> NEPSE market overview + live market feed
+  omedate-home.png    -> OmeDate landing (Random Chat + Blind Date)
+  automation-suite.png -> Automation Suite workflow recorder window
+  mail-studio.png      -> Mail Studio renewal outreach flow
+
+PNG or JPG both work — if you use .jpg, update the paths in src/data/projects.js.

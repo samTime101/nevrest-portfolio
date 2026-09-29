@@ -307,10 +307,17 @@ export const projects = [
     stack: ['React', 'GIS mapping', 'Geospatial data', 'Rules engine'],
     accent: 'teal',
     year: 'Shipped — in use',
+    cover: '/work/compliance-compass.png',
+    shots: [
+      {
+        src: '/work/compliance-compass.png',
+        alt: 'Compliance Compass map with flight clearance verdict and permit checklist',
+        caption: 'Pin-drop clearance — verdict plus the exact permits required',
+      },
+    ],
     stats: [
       { value: '3', label: 'Verdicts — allowed / restricted / prohibited' },
       { value: '4+', label: 'Zone domains mapped' },
-      { value: '0', label: 'PDFs to cross-reference' },
     ],
     highlights: [
       {

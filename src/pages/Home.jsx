@@ -52,23 +52,8 @@ const industries = [
   'Professional services',
 ]
 
-const reasons = [
-  ['01', 'Engineering-first', 'We make deliberate technical decisions that support the product long after launch.'],
-  ['02', 'Practical AI', 'We use AI where it creates real leverage, not just where it makes a good headline.'],
-  ['03', 'Built to evolve', 'Clean systems and thoughtful architecture make the next change less expensive.'],
-  ['04', 'Clear collaboration', 'Direct communication, visible progress, and honest conversations throughout.'],
-  ['05', 'Fast learning loops', 'We focus work on the riskiest assumptions and iterate with purpose.'],
-  ['06', 'Support after launch', 'A launch is the beginning of the product journey, not the end of ours.'],
-]
-
-const team = [
-  { initials: 'SA', name: 'Sayuz Acharya', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/sayuz-acharya-13453643b/' },
-  { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' },
-  { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
-  { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
-]
-
-const faqs = [  ['What kind of projects do you build?', 'We build web platforms, mobile applications, internal tools, custom software, AI-enabled products, and automation systems.'],
+const faqs = [  
+  ['What kind of projects do you build?', 'We build web platforms, mobile applications, internal tools, custom software, AI-enabled products, and automation systems.'],
   ['Can you build custom AI solutions?', 'Yes. We can help identify a useful AI opportunity, design the right workflow, and build it into a reliable product or internal system.'],
   ['Do you work with startups?', 'Yes. We work with early-stage teams as well as established businesses, from product direction through production delivery.'],
   ['Can you work with an existing development team?', 'Absolutely. We can extend a team, take ownership of a defined product area, or provide focused technical and product support.'],
@@ -92,7 +77,7 @@ export default function Home() {
         .from('.hero-bottom', { y: 25, opacity: 0, duration: 0.8 }, '-=.55')
         .from('.hero-stack', { scale: 0.8, opacity: 0, duration: 1.1 }, '-=.85')
       gsap.utils
-        .toArray('.statement-grid, .section-heading, .service, .process-step, .tech-row, .project-card, .team-member, .reason, .faq-item, .contact-inner')
+        .toArray('.statement-grid, .section-heading, .service, .process-step, .tech-row, .project-card, .faq-item, .contact-inner')
         .forEach((element) =>
           gsap.from(element, {
             y: 45,
@@ -325,55 +310,6 @@ export default function Home() {
                 <span className="service-number">{step.number}</span>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="why-nepal">
-        <div className="shell why-grid">
-          <p className="section-label">Why teams choose us</p>
-          <div>
-            <h2>
-              Good software starts
-              <br />
-              <span>with good judgement.</span>
-            </h2>
-            <div className="reason-grid">
-              {reasons.map(([number, title, text]) => (
-                <article className="reason" key={number}>
-                  <span>{number}</span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="team" id="team">
-        <div className="shell">
-          <div className="section-heading">
-            <p className="section-label">Meet the team</p>
-            <p className="heading-aside">Small, hands-on, and focused.</p>
-          </div>
-          <div className="team-grid">
-            {team.map((member) => (
-              <article className="team-member" key={member.name}>
-                <div className="portrait">
-                  <span>{member.initials}</span>
-                </div>
-                <h3>{member.name}</h3>
-                <p>
-                  {member.role} / Nevrest Labs
-                </p>
-                {member.linkedin && (
-                  <a className="text-link" href={member.linkedin} target="_blank" rel="noreferrer">
-                    LinkedIn <Arrow />
-                  </a>
-                )}
               </article>
             ))}
           </div>

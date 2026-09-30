@@ -52,14 +52,21 @@ const industries = [
   'Professional services',
 ]
 
+const team = [
+  { initials: 'SA', name: 'Sayuz Acharya', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/sayuz-acharya-13453643b/' },
+  { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' },
+  { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
+  { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
+]
+
 const faqs = [  
   ['What kind of projects do you build?', 'We build web platforms, mobile applications, internal tools, custom software, AI-enabled products, and automation systems.'],
   ['Can you build custom AI solutions?', 'Yes. We can help identify a useful AI opportunity, design the right workflow, and build it into a reliable product or internal system.'],
   ['Do you work with startups?', 'Yes. We work with early-stage teams as well as established businesses, from product direction through production delivery.'],
   ['Can you work with an existing development team?', 'Absolutely. We can extend a team, take ownership of a defined product area, or provide focused technical and product support.'],
   ['How long does a typical project take?', 'The answer depends on scope and complexity. We define a practical delivery plan during discovery before committing to a timeline.'],
-  ['Do you provide maintenance after launch?', 'Yes. We can provide monitoring, ongoing improvements, technical support, and a plan for the product’s next stage.'],
-  ['What technologies do you use?', 'We select tools around the product’s needs, with experience across modern web, mobile, backend, AI, data, and cloud technologies.'],
+  ['Do you provide maintenance after launch?', "Yes. We can provide monitoring, ongoing improvements, technical support, and a plan for the product's next stage."],
+  ['What technologies do you use?', "We select tools around the product's needs, with experience across modern web, mobile, backend, AI, data, and cloud technologies."],
 ]
 
 export default function Home() {
@@ -77,7 +84,7 @@ export default function Home() {
         .from('.hero-bottom', { y: 25, opacity: 0, duration: 0.8 }, '-=.55')
         .from('.hero-stack', { scale: 0.8, opacity: 0, duration: 1.1 }, '-=.85')
       gsap.utils
-        .toArray('.statement-grid, .section-heading, .service, .process-step, .tech-row, .project-card, .faq-item, .contact-inner')
+        .toArray('.statement-grid, .section-heading, .service, .process-step, .tech-row, .project-card, .team-member, .faq-item, .contact-inner')
         .forEach((element) =>
           gsap.from(element, {
             y: 45,
@@ -310,6 +317,33 @@ export default function Home() {
                 <span className="service-number">{step.number}</span>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="team" id="team">
+        <div className="shell">
+          <div className="section-heading">
+            <p className="section-label">Meet the team</p>
+            <p className="heading-aside">Small, hands-on, and focused.</p>
+          </div>
+          <div className="team-grid">
+            {team.map((member) => (
+              <article className="team-member" key={member.name}>
+                <div className="portrait">
+                  <span>{member.initials}</span>
+                </div>
+                <h3>{member.name}</h3>
+                <p>
+                  {member.role} / Nevrest Labs
+                </p>
+                {member.linkedin && (
+                  <a className="text-link" href={member.linkedin} target="_blank" rel="noreferrer">
+                    LinkedIn <Arrow />
+                  </a>
+                )}
               </article>
             ))}
           </div>

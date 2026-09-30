@@ -67,9 +67,9 @@ export function Nav() {
         <Link to="/#contact" onClick={closeMenu}>
           Contact
         </Link>
-        <a href="/nevrest-how-we-deliver.html" className="nav-cta" onClick={closeMenu}>
+        <Link to="/how-we-deliver" className="nav-cta" onClick={closeMenu}>
           How we work <Arrow />
-        </a>
+        </Link>
         <Link to="/#contact" className="nav-cta" onClick={closeMenu}>
           Start a project <Arrow />
         </Link>

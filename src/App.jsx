@@ -7,6 +7,7 @@ import Home from './pages/Home.jsx'
 import Projects from './pages/Projects.jsx'
 import ProjectDetail from './pages/ProjectDetail.jsx'
 import Clients from './pages/Clients.jsx'
+import HowWeDeliver from './pages/HowWeDeliver.jsx'
 
 function ScrollManager() {
   const { pathname, hash } = useLocation()
@@ -35,6 +36,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/clients" element={<Clients />} />
+          <Route path="/how-we-deliver" element={<HowWeDeliver />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />

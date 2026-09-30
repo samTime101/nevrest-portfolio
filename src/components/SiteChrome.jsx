@@ -94,12 +94,7 @@ export function Footer() {
           LinkedIn
         </a>
       </div>
-      <span>
-        Software, with intent. · Powered by{' '}
-        <a href="https://www.instagram.com/kiwi.nepal/" target="_blank" rel="noreferrer">
-          Kiwi Nepal
-        </a>
-      </span>
+      <span>Software, with intent.</span>
       <span>© 2026 Nevrest Labs</span>
     </footer>
   )

@@ -5,6 +5,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Arrow, Mark, Nav } from '../components/SiteChrome.jsx'
 import { ArtCover } from '../components/Shots.jsx'
+import { ClientCard } from '../components/ClientCard.jsx'
+import { clients } from '../data/clients.js'
 import { projects } from '../data/projects.js'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -374,6 +376,29 @@ export default function Home() {
                 )}
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="clients-home" id="clients">
+        <div className="shell">
+          <div className="section-heading">
+            <p className="section-label">Clients</p>
+            <p className="heading-aside">Good company, good work.</p>
+          </div>
+          <h2 className="section-title">
+            Teams we<br />
+            <span>build with.</span>
+          </h2>
+          <div className="client-grid">
+            {clients.map((client) => (
+              <ClientCard key={client.slug} client={client} />
+            ))}
+          </div>
+          <div className="home-projects-cta">
+            <Link className="text-link text-link--big" to="/clients">
+              Meet all clients <Arrow />
+            </Link>
           </div>
         </div>
       </section>

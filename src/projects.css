@@ -252,6 +252,21 @@
 .case-nextproj a strong { font: 800 clamp(40px, 6vw, 84px)/1 var(--sans); letter-spacing: -0.07em; transition: color 0.2s, transform 0.2s; }
 .case-nextproj a:hover strong { color: var(--lime); transform: translateX(8px); }
 
+/* ---------- Clients ---------- */
+.clients-home { background: var(--ink); color: var(--paper); padding: 110px 0; border-top: 1px solid var(--rule); }
+.client-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 48px; }
+.client-card { border: 1px solid var(--rule); background: #17181a; padding: 22px; display: flex; flex-direction: column; gap: 6px; height: 100%; }
+.client-logo { background: var(--paper); min-height: 150px; display: grid; place-items: center; padding: 18px; overflow: hidden; margin-bottom: 14px; }
+.client-logo img { max-width: 100%; max-height: 120px; object-fit: contain; }
+.client-fallback { font: 800 44px var(--sans); letter-spacing: -0.06em; color: var(--ink); }
+.client-card h3 { font: 700 22px var(--sans); letter-spacing: -0.04em; color: var(--paper); }
+.client-handle { font: 11px var(--mono); color: #8e8e88; }
+.client-socials { display: flex; gap: 18px; margin-top: 12px; flex-wrap: wrap; }
+.clients-list-wrap { background: var(--ink); padding: 64px 0 110px; }
+.clients-cta { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin-top: 80px; padding-top: 60px; border-top: 1px solid var(--rule); }
+.clients-cta h2 { font-size: clamp(40px, 5vw, 72px); margin-top: 18px; }
+.clients-cta h2 span { color: var(--lime); }
+
 @media (max-width: 1050px) {
   .work-card { grid-template-columns: 1fr; }
   .work-art { min-height: 360px; }
@@ -260,6 +275,9 @@
   .case-meta { grid-template-columns: 1fr 1fr; }
   .work-band-inner { grid-template-columns: 1fr; gap: 24px; }
   .case-giant { font-size: 200px; }
+  .client-grid { grid-template-columns: 1fr; }
+  .clients-cta { flex-direction: column; align-items: flex-start; }
+  .clients-home { padding: 80px 0; }
 }
 @media (max-width: 760px) {
   .work-hero-inner { padding-bottom: 36px; }

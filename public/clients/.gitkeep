@@ -1,0 +1,7 @@
+Drop client logos here with these exact filenames:
+
+  kiwi.png            -> Kiwi Nepal logo
+  zynex-digital.png   -> Zynex Digital logo
+  panda-pixel.png     -> Panda Pixel Productions logo
+
+PNG or JPG both work — if you use .jpg, update the paths in src/data/clients.js.

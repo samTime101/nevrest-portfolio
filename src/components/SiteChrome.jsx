@@ -52,6 +52,9 @@ export function Nav() {
         <Link to="/projects" onClick={closeMenu} aria-current={onProjects ? 'page' : undefined}>
           Projects
         </Link>
+        <Link to="/clients" onClick={closeMenu}>
+          Clients
+        </Link>
         <Link to="/#about" onClick={closeMenu}>
           About
         </Link>
@@ -82,12 +85,18 @@ export function Footer() {
         <Link to="/#about">About</Link>
         <Link to="/#services">Services</Link>
         <Link to="/projects">Projects</Link>
+        <Link to="/clients">Clients</Link>
         <Link to="/#contact">Contact</Link>
         <a href="https://www.linkedin.com/company/143899606/" target="_blank" rel="noreferrer">
           LinkedIn
         </a>
       </div>
-      <span>Software, with intent.</span>
+      <span>
+        Software, with intent. · Powered by{' '}
+        <a href="https://www.instagram.com/kiwi.nepal/" target="_blank" rel="noreferrer">
+          Kiwi Nepal
+        </a>
+      </span>
       <span>© 2026 Nevrest Labs</span>
     </footer>
   )

@@ -22,14 +22,6 @@ const services = [
   { number: '08', title: 'Cloud & DevOps', text: 'Deployment, CI/CD, monitoring, and dependable production infrastructure.' },
 ]
 
-const process = [
-  { number: '01', title: 'Discover', text: 'Understand the problem, business goals, users, and what success needs to look like.' },
-  { number: '02', title: 'Plan', text: 'Define the scope, architecture, technology, and product direction before we build.' },
-  { number: '03', title: 'Build', text: 'Design, develop, integrate, and test in close collaboration with your team.' },
-  { number: '04', title: 'Launch', text: 'Deploy with care and make the transition to production clear and dependable.' },
-  { number: '05', title: 'Improve', text: 'Monitor, learn, optimise, and keep making the product more useful over time.' },
-]
-
 const technologies = [
   ['Frontend', 'React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
   ['Backend', 'Node.js', 'Python', 'FastAPI', 'Flask'],
@@ -84,7 +76,7 @@ export default function Home() {
         .from('.hero-bottom', { y: 25, opacity: 0, duration: 0.8 }, '-=.55')
         .from('.hero-stack', { scale: 0.8, opacity: 0, duration: 1.1 }, '-=.85')
       gsap.utils
-        .toArray('.statement-grid, .section-heading, .service, .process-step, .tech-row, .project-card, .team-member, .faq-item, .contact-inner')
+        .toArray('.statement-grid, .section-heading, .service, .tech-row, .project-card, .team-member, .faq-item, .contact-inner')
         .forEach((element) =>
           gsap.from(element, {
             y: 45,
@@ -300,24 +292,6 @@ export default function Home() {
           <div className="industry-list">
             {industries.map((industry) => (
               <span key={industry}>{industry}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="process" id="process">
-        <div className="shell">
-          <div className="section-heading">
-            <p className="section-label">How we work</p>
-            <p className="heading-aside">A clear path from idea to launch.</p>
-          </div>
-          <div className="process-grid">
-            {process.map((step) => (
-              <article className="process-step" key={step.number}>
-                <span className="service-number">{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </article>
             ))}
           </div>
         </div>

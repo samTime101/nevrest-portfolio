@@ -23,4 +23,14 @@ export const clients = [
     logo: '/clients/panda-pixel.png',
     socials: [{ label: 'Instagram', href: 'https://www.instagram.com/pan_da.pixel/' }],
   },
+  {
+    slug: 'akdev-group',
+    name: 'AKDev Group',
+    handle: 'akdevgroup.com',
+    logo: '/clients/akdev-group.png',
+    socials: [
+      { label: 'Website', href: 'https://akdevgroup.com/' },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/akdev-group/home/' },
+    ],
+  },
 ]

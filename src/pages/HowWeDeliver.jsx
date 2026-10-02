@@ -4,12 +4,14 @@ import { Arrow, Nav } from '../components/SiteChrome.jsx'
 import '../howdeliver.css'
 
 const subNav = [
-  ['#leads', 'The leads'],
-  ['#lifecycle', 'Lifecycle'],
+  ['#team', 'Team'],
+  ['#flow', 'Lifecycle'],
   ['#models', 'Models'],
   ['#workflows', 'How it works'],
   ['#faq', 'Client Q&A'],
   ['#scope', 'What we work on'],
+  ['#core', 'Core team'],
+  ['#partners', 'Partnerships'],
   ['#start', 'Start'],
 ]
 
@@ -98,14 +100,6 @@ const workflows = [
       ['h', 'Ongoing support'],
       ['o', 'Renew / replace / end'],
     ],
-    table: [
-      ['Skill profile', 'Defines skills, seniority, technologies', 'Confirms count, start date, duration', 'Confirms the request with you'],
-      ['Sourcing', 'Screens candidates against profile', 'Checks availability and terms', ''],
-      ['Verification and approval', 'Technically verifies each candidate', 'Prepares candidate summaries', 'Presents candidates; gets your approval'],
-      ['Onboarding', 'Briefs engineers on standards and tools', 'Sets hours, reporting line, access plan', 'Coordinates your access and contacts'],
-      ['Ongoing support', 'Periodic technical check', 'Tracks availability, hours, issues', 'Collects your feedback'],
-      ['Renew / replace / end', 'Verifies any replacement', 'Runs replacement or transition', 'Communicates; discusses renewal'],
-    ],
     recap: [
       ['You', 'confirm the profile, approve each candidate, direct the daily work.'],
       ['We', 'source and verify engineers, manage availability, and replace anyone who is not the right fit.'],
@@ -126,14 +120,6 @@ const workflows = [
       ['h', 'Recurring cycle'],
       ['o', 'Review and adjust'],
       ['o', 'Renew'],
-    ],
-    table: [
-      ['Team design', 'Defines roles and skills', 'Defines size, capacity, duration (and hour limits if retainer)', 'Agrees the team with you'],
-      ['Assembly', 'Selects and verifies people', 'Onboards team; sets working rules', ''],
-      ['Kickoff and planning', 'Sets architecture and standards', 'Work breakdown, milestones, cycle cadence', 'Gets your priorities; introduces the team'],
-      ['Recurring cycle', 'Reviews code and quality; estimates backlog items', 'Plans each cycle within capacity; tracks progress, risks, blockers', 'Collects backlog priorities; sends weekly progress and decisions needed'],
-      ['Review and adjust', 'Reports technical health; changes skill mix', 'Reports status and capacity used; resizes team', 'Runs periodic review; agrees changes with you'],
-      ['Renew', '', 'Reports capacity outlook', 'Discusses renewal or expansion'],
     ],
     recap: [
       ['You', 'set priorities, join the periodic review, approve changes to the team.'],
@@ -366,6 +352,96 @@ const fallbackCards = [
   },
 ]
 
+const coreCards = [
+  {
+    tag: 'Build',
+    title: 'What we build',
+    pills: ['Web and mobile', 'Backend and APIs', 'Cloud and SaaS', 'UI/UX', 'Automation', 'AI/ML', 'Custom software'],
+  },
+  {
+    tag: 'Domains',
+    title: 'Where we work',
+    pills: ['E-commerce', 'IoT', 'Embedded systems', 'Gaming', 'Blockchain', 'Engineering', 'IT'],
+  },
+  {
+    tag: 'Process',
+    title: 'How we work',
+    pills: ['Agile', 'Scrum', 'Kanban'],
+  },
+]
+
+const coreStack = [
+  ['Product management', 'Agile, Scrum, Kanban'],
+  ['QA', 'Selenium, Appium, JUnit, Burp Suite'],
+  ['Web', 'React.js, Node.js, JavaScript, AngularJS, HTML5 / CSS3, jQuery, ASP.NET MVC, WordPress'],
+  ['Mobile', 'React (hybrid), Dart, Java, C# / .NET'],
+  ['Backend', 'Node.js, ASP.NET, Entity Framework, Java / J2EE, Python, SQL, NoSQL'],
+  ['APIs', 'Web Services, JSON, XML, AJAX'],
+  ['Cloud', 'AWS, Cloudfare, Vercel'],
+  ['SaaS', 'ERP, CRM, HRM'],
+  ['Automation', 'Python, PowerShell, Bash Scripting'],
+]
+
+const partnerships = [
+  {
+    number: '01',
+    title: 'Referral partnerships',
+    text: 'You introduce a client who needs software built, and we take it from there. A single introduction, not an ongoing exchange.',
+    who: 'Agencies, consultants, designers, freelancers and advisors who meet clients needing development they do not offer themselves.',
+    how: 'You make the introduction. Our Client Communication Lead runs discovery and the fit check, and keeps you updated at agreed points. You do not deliver or manage anything.',
+    agreed: 'How the referral is recognised, whether a reward or a referral back, set in writing before the first introduction. The client agrees to be contacted.',
+  },
+  {
+    number: '02',
+    title: 'Lead sharing',
+    text: 'A two-way, ongoing exchange of opportunities. Leads that do not fit one side go to the partner who suits them.',
+    who: 'Agencies and studios whose work overlaps with ours or sits next to it, and who regularly see leads that do not fit.',
+    how: 'When a lead is outside our scope, capacity or fit check, we pass it to a partner who suits it. When a partner has one that fits our work, they pass it to us. Business Development records who sent what and when, so credit is clear.',
+    agreed: 'An NDA first. What is shared and what is not, who owns the relationship with each lead, and how credit is recorded.',
+  },
+  {
+    number: '03',
+    title: 'SaaS growth partnerships',
+    text: 'Engineering capacity for SaaS products that need to grow, and for the partners who serve them.',
+    who: 'SaaS founders and product teams with a roadmap bigger than their team, and growth, product or marketing partners whose SaaS clients need things built.',
+    how: 'SaaS companies take a dedicated team or staff augmentation to ship roadmap work, integrations and improvements, with a reserved-hours retainer for steady progress. Growth partners hand us the engineering that follows their strategy, such as onboarding flows, integrations, billing and analytics. We build it behind them, white-label if they prefer.',
+    agreed: 'Which model (staff augmentation or dedicated team), who speaks to the SaaS company, the reporting format, and what stays confidential.',
+  },
+  {
+    number: '04',
+    title: 'Software development partnerships',
+    text: 'Build capacity when you need it, and specialist skills when we do.',
+    who: 'Agencies, studios, consultancies and product companies that want delivery capacity without hiring for it.',
+    how: 'Take projects, staff augmentation or dedicated teams, with white-label when you keep the end client. It works the other way too: if we need skills or reach we lack, we bring in a partner. When a client wants international delivery, such as local presence or a legal entity, time-zone coverage, local language or market knowledge, or regional compliance, we either bring a partner in or export our services to theirs.',
+    agreed: 'Which model, who owns the client relationship, how we report, and the same fit check as section 06. If it is not a fit, we say so early.',
+  },
+  {
+    number: '05',
+    title: 'Revenue-sharing opportunities',
+    text: 'Where a partner helps win or deliver the work, we can share the revenue. It is not automatic in every partnership. It applies only where we agree it.',
+    who: 'Partners who bring recurring or substantial work, or who deliver part of a project jointly with us.',
+    how: 'It can take three shapes: a share when a referred client signs; a share of recurring revenue on ongoing work such as a dedicated team; or a split on a jointly delivered project, based on who does what.',
+    agreed: 'What triggers the share, which payments it covers, for how long, how it is reported and when it is paid. Nothing is promised until it is written. Figures are agreed per partner.',
+  },
+]
+
+const partnershipGlance = [
+  ['Referral', 'An introduction to a client', 'Discovery, fit check, delivery', 'Agreed reward or referral back'],
+  ['Lead sharing', 'Leads that fit us', 'Pass on leads that fit you', 'Opportunities in both directions'],
+  ['SaaS growth', 'A SaaS product or SaaS client', 'Build the roadmap and integrations', 'Faster shipping, or a built-in delivery arm'],
+  ['Software development', 'Projects, or your own client work', 'Projects, staff augmentation, dedicated teams', 'Capacity without hiring, skills both ways'],
+  ['Revenue-sharing', 'Recurring or joint work', 'Deliver, report, pay as agreed', 'A share of revenue, set in writing'],
+]
+
+const partnershipStart = [
+  ['o', 'Intro conversation'],
+  ['h', 'Fit and capacity check'],
+  ['o', 'NDA'],
+  ['o', 'Terms of exchange'],
+  ['o', 'Proposal and agreement'],
+  ['h', 'First engagement'],
+]
+
 function LifecycleDiagram() {
   return (
     <div className="hd-diagram">
@@ -539,7 +615,7 @@ export default function HowWeDeliver() {
         </div>
       </nav>
 
-      <section className="hd-section" id="leads">
+      <section className="hd-section" id="team">
         <div className="shell">
           <p className="hd-eye">01 — The four leads</p>
           <h2 className="hd-h2">
@@ -562,7 +638,7 @@ export default function HowWeDeliver() {
         </div>
       </section>
 
-      <section className="hd-section hd-section--paper" id="lifecycle">
+      <section className="hd-section hd-section--paper" id="flow">
         <div className="shell">
           <p className="hd-eye">02 — Every engagement, three parts</p>
           <h2 className="hd-h2">
@@ -667,7 +743,7 @@ export default function HowWeDeliver() {
               </h3>
               <p className="hd-sub">{workflow.intro}</p>
               <StepFlow steps={workflow.steps} />
-              <WorkflowTable rows={workflow.table} />
+              {workflow.table && <WorkflowTable rows={workflow.table} />}
               <p className="hd-recap">
                 {workflow.recap.map(([label, text], index) => (
                   <span key={label}>
@@ -702,27 +778,29 @@ export default function HowWeDeliver() {
           </p>
 
           <div className="hd-faq-wrap">
-            {faqGroups.map((group, groupIndex) => (
-              <div className="hd-faq-group" key={group.title}>
-                <p className="hd-eye">{group.title}</p>
-                {group.items.map(([question, answer], itemIndex) => {
-                  const index = groupIndex * 100 + itemIndex
-                  return (
-                    <details className="hd-faq-item" key={question} open={openFaq === index}>
-                      <summary
-                        onClick={(event) => {
-                          event.preventDefault()
-                          setOpenFaq(openFaq === index ? -1 : index)
-                        }}
-                      >
-                        {question}
-                      </summary>
-                      <p>{answer}</p>
-                    </details>
-                  )
-                })}
-              </div>
-            ))}
+            <div className="hd-faq-panel">
+              {faqGroups.map((group, groupIndex) => (
+                <div className="hd-faq-group" key={group.title}>
+                  <p className="hd-eye">{group.title}</p>
+                  {group.items.map(([question, answer], itemIndex) => {
+                    const index = groupIndex * 100 + itemIndex
+                    return (
+                      <details className="hd-faq-item" key={question} open={openFaq === index}>
+                        <summary
+                          onClick={(event) => {
+                            event.preventDefault()
+                            setOpenFaq(openFaq === index ? -1 : index)
+                          }}
+                        >
+                          {question}
+                        </summary>
+                        <p>{answer}</p>
+                      </details>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -792,9 +870,138 @@ export default function HowWeDeliver() {
         </div>
       </section>
 
+      <section className="hd-section" id="core">
+        <div className="shell">
+          <p className="hd-eye">07 — Our core team</p>
+          <h2 className="hd-h2">
+            A small core team. <em>Skills we can name.</em>
+          </h2>
+          <p className="hd-sub">
+            This is what our core team of five has direct access to today. Anything outside this list goes through the fit
+            check in section 06, not a guess.
+          </p>
+          <div className="hd-cards hd-cards--dark">
+            {coreCards.map((card) => (
+              <div className="hd-card hd-card--dark" key={card.title}>
+                <span className="hd-tag">{card.tag}</span>
+                <h4>{card.title}</h4>
+                <div className="hd-pills">
+                  {card.pills.map((pill) => (
+                    <span className="hd-tag" key={pill}>
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="hd-h3">Frameworks and tools</h3>
+          <div className="hd-raci hd-raci--dark hd-stack-table">
+            <table className="hd-table hd-table--dark">
+              <thead>
+                <tr>
+                  <th>Discipline</th>
+                  <th>What we specialize in</th>
+                </tr>
+              </thead>
+              <tbody>
+                {coreStack.map(([discipline, stack]) => (
+                  <tr key={discipline}>
+                    <td>{discipline}</td>
+                    <td>{stack}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="hd-callout">
+            <span className="hd-tag hd-tag--o">Beyond the core team</span>
+            <p style={{ margin: '9px 0 0' }}>
+              When a project needs more capacity or a skill we don&apos;t hold in-house, we draw on our wider engineering
+              network in Nepal. That is a category B answer from section 06: each person is verified for your product before we
+              commit, and you are told which people are core team and which are not.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="hd-section hd-section--paper" id="partners">
+        <div className="shell">
+          <p className="hd-eye">08 — Partnerships</p>
+          <h2 className="hd-h2">
+            Ways to <em>work together.</em>
+          </h2>
+          <p className="hd-sub">
+            We are open to partnerships with agencies, studios, consultancies, founders and product companies. These are the
+            shapes they can take. Most start with one and grow from there.
+          </p>
+
+          {partnerships.map((partnership) => (
+            <div key={partnership.title}>
+              <h3 className="hd-h3">
+                <span>{partnership.number}</span>
+                {partnership.title}
+              </h3>
+              <p className="hd-sub">{partnership.text}</p>
+              <div className="hd-partner-grid">
+                {[
+                  ['Who it suits', partnership.who],
+                  ['How it works', partnership.how],
+                  ['Agreed up front', partnership.agreed],
+                ].map(([term, value]) => (
+                  <div key={term}>
+                    <dl>
+                      <dt>{term}</dt>
+                      <dd>{value}</dd>
+                    </dl>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <h3 className="hd-h3">At a glance</h3>
+          <div className="hd-raci">
+            <table className="hd-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th className="hd-th--o">You bring</th>
+                  <th className="hd-th--h">We do</th>
+                  <th>Return</th>
+                </tr>
+              </thead>
+              <tbody>
+                {partnershipGlance.map(([type, you, we, result]) => (
+                  <tr key={type}>
+                    <td>{type}</td>
+                    <td>{you}</td>
+                    <td>{we}</td>
+                    <td>{result}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 className="hd-h3">How a partnership starts</h3>
+          <StepFlow steps={partnershipStart} />
+          <div className="hd-callout hd-callout--paper">
+            <span className="hd-tag hd-tag--o">Cost</span>
+            <p style={{ margin: '9px 0 0' }}>
+              The cost of any service, whether a project, staff augmentation, a dedicated team or an exchange, is discussed
+              during the agreement and proposal stage. It depends on your specific requirements, and we give you an estimate
+              before anything starts. Any revenue-sharing terms are agreed at the same stage.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="hd-start" id="start">
         <div className="shell">
-          <p className="hd-eye">07 — Start here</p>
+          <p className="hd-eye">09 — Start here</p>
           <h2 className="hd-h2">
             Send us the basics. <em>Get a straight answer.</em>
           </h2>
@@ -802,9 +1009,12 @@ export default function HowWeDeliver() {
             Product type, main stack, team shape, rough timeline. No names, no documents. You get a conditional answer, A, B
             or C, and what it depends on.
           </p>
-          <a className="hd-mail" href="mailto:contact@nevrestlabs.com">
-            contact@nevrestlabs.com
-          </a>
+          <p className="hd-contact">
+            Contact:{' '}
+            <a className="hd-mail" href="mailto:contact@nevrestlabs.com">
+              contact@nevrestlabs.com
+            </a>
+          </p>
           <div className="hd-pills">
             <Link className="text-link" to="/#contact">
               Start a conversation <Arrow />

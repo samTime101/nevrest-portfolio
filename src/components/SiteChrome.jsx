@@ -61,8 +61,8 @@ export function Nav() {
         <Link to="/#process" onClick={closeMenu}>
           Process
         </Link>
-        <Link to="/#team" onClick={closeMenu}>
-          Team
+        <Link to="/#founders" onClick={closeMenu}>
+          Founders
         </Link>
         <Link to="/#contact" onClick={closeMenu}>
           Contact

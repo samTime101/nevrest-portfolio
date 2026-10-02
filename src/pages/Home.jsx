@@ -52,7 +52,7 @@ const industries = [
   'Professional services',
 ]
 
-const team = [
+const founders = [
   { initials: 'SA', name: 'Sayuz Acharya', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/sayuz-acharya-13453643b/' },
   { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' },
   { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
@@ -323,14 +323,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="team" id="team">
+      <section className="team" id="founders">
         <div className="shell">
           <div className="section-heading">
-            <p className="section-label">Meet the team</p>
+            <p className="section-label">Founders</p>
             <p className="heading-aside">Small, hands-on, and focused.</p>
           </div>
           <div className="team-grid">
-            {team.map((member) => (
+            {founders.map((member) => (
               <article className="team-member" key={member.name}>
                 <div className="portrait">
                   <span>{member.initials}</span>

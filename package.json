@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "pdf:overview": "node scripts/build-overview-pdf.mjs",
     "cf:preview": "npm run build && wrangler pages dev dist",
     "cf:deploy": "npm run build && wrangler pages deploy dist"
   },

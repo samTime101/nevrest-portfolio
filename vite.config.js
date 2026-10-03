@@ -1,6 +1,15 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { headMetaTags, llmsFullTxt, llmsTxt, redirectsFile, schemaTags, securityHeaders, sitemapXml } from './src/lib/seo-files.js'
+import {
+  headMetaTags,
+  llmsFullTxt,
+  llmsTxt,
+  noscriptFallback,
+  redirectsFile,
+  schemaTags,
+  securityHeaders,
+  sitemapXml,
+} from './src/lib/seo-files.js'
 
 /**
  * GEO + hosting layer. Everything a crawler, a language model or a security
@@ -19,7 +28,10 @@ function geoPlugin() {
     name: 'nevrest-geo',
 
     transformIndexHtml(html) {
-      return html.replace('<!--geo:meta-->', headMetaTags()).replace('<!--geo:schema-->', schemaTags())
+      return html
+        .replace('<!--geo:meta-->', headMetaTags())
+        .replace('<!--geo:schema-->', schemaTags())
+        .replace('<!--geo:noscript-->', noscriptFallback())
     },
 
     generateBundle() {

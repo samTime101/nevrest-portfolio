@@ -1,0 +1,8 @@
+Contact: mailto:security@nevrestlabs.com
+Expires: 2027-10-03T00:00:00.000Z
+Canonical: https://nevrestlabs.com/.well-known/security.txt
+Preferred-Languages: en
+Encryption: https://nevrestlabs.com/
+Acknowledgments: https://nevrestlabs.com/how-we-deliver
+Policy: https://nevrestlabs.com/how-we-deliver
+Hiring: https://www.linkedin.com/company/143899606/

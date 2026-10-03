@@ -1,0 +1,26 @@
+{
+  "name": "Nevrest Labs",
+  "short_name": "Nevrest",
+  "description": "Software company in Kathmandu, Nepal building web platforms, mobile apps, AI systems, automation tools and custom software.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101113",
+  "theme_color": "#101113",
+  "lang": "en",
+  "categories": ["business", "developer", "productivity"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "1080x1080",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

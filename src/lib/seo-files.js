@@ -47,6 +47,8 @@ export function securityHeaders() {
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
   Contact: ${site.email}
 
@@ -79,6 +81,14 @@ export function securityHeaders() {
   Cache-Control: public, max-age=3600
 
 /robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=86400
+
+/.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
 
@@ -145,6 +155,124 @@ export const routes = [
 export const title = pageTitles.home
 
 const tag = (attribute, key, content) => `\n    <meta ${attribute}="${key}" content="${content}" />`
+const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
+/**
+ * Static content fallback for the <noscript> block.
+ *
+ * The app is client-rendered, so a crawler that does not execute JavaScript
+ * receives an empty <div id="root">. This renders a real, readable outline of the
+ * site — headings as questions, the actual service/project/client data, working
+ * internal links — generated from the same modules as the React pages, so the
+ * copy cannot drift. This is what a visitor without JavaScript sees.
+ */
+export function noscriptFallback() {
+  const shipped = publicProjects()
+  const live = shipped.filter((project) => project.status === 'Live')
+
+  const navLinks = [
+    ['/projects', 'Projects'],
+    ['/clients', 'Clients'],
+    ['/how-we-deliver', 'How we deliver'],
+    ['/#contact', 'Contact'],
+  ]
+    .map(([href, label]) => `<a href="${href}">${label}</a>`)
+    .join(' · ')
+
+  const serviceItems = services
+    .map((service) => `<li><b>${esc(service.title)}</b> — ${esc(service.text)}</li>`)
+    .join('\n          ')
+
+  const projectItems = shipped
+    .map(
+      (project) =>
+        `<li><a href="/projects/${esc(project.slug)}"><b>${esc(project.title)}</b></a> (${esc(project.status)}) — ${esc(project.short)}</li>`,
+    )
+    .join('\n          ')
+
+  const clientItems = clients
+    .map((client) => `<li><b>${esc(client.name)}</b> (${esc(client.handle)})</li>`)
+    .join('\n          ')
+
+  const founderItems = founders
+    .map((founder) => `<li><b>${esc(founder.name)}</b> — ${esc(founder.role)}, Nevrest Labs</li>`)
+    .join('\n          ')
+
+  const modelItems = deliveryModels
+    .map((model) => `<li><b>${esc(model.name)}</b> — ${esc(model.blurb)}</li>`)
+    .join('\n          ')
+
+  const faqItems = faqs
+    .map(([question, answer]) => `<h3>${esc(question)}</h3>\n          <p>${esc(answer)}</p>`)
+    .join('\n          ')
+
+  const techLine = technologies.map(([group, ...items]) => `<b>${esc(group)}:</b> ${items.map(esc).join(', ')}`).join(' · ')
+
+  return `
+    <noscript>
+      <div class="ns-fallback">
+        <h1>Nevrest Labs — Software Company in Kathmandu, Nepal</h1>
+        <p>
+          Nevrest Labs is a software company based in ${esc(site.city)}, ${esc(site.country)} (${esc(site.utcOffset)}). We design,
+          build and ship web platforms, mobile apps, AI and machine learning systems, automation tools, backend APIs and custom
+          software for businesses. This page needs JavaScript for its full layout — everything below is the same content in plain
+          HTML, and every link works.
+        </p>
+        <p>
+          <b>At a glance:</b> ${founders.length} co-founders · ${services.length} service lines · ${shipped.length} documented
+          products (${live.length} live) · ${clients.length} client teams · ${industries.length} industries served.
+          Last updated ${esc(site.lastModified)}.
+        </p>
+        <nav aria-label="Main">${navLinks}</nav>
+
+        <h2>What does Nevrest Labs build?</h2>
+        <ul>
+          ${serviceItems}
+        </ul>
+
+        <h2>Who founded Nevrest Labs?</h2>
+        <ul>
+          ${founderItems}
+        </ul>
+
+        <h2>Which products has Nevrest Labs built?</h2>
+        <ul>
+          ${projectItems}
+        </ul>
+
+        <h2>Who does Nevrest Labs work with?</h2>
+        <ul>
+          ${clientItems}
+        </ul>
+
+        <h2>How does Nevrest Labs deliver a project?</h2>
+        <p>
+          Every engagement runs entry, delivery and exit, through three models. One Client Communication lead stays your single
+          point of contact from discovery to handover.
+        </p>
+        <ol>
+          ${modelItems}
+        </ol>
+
+        <h2>Which technologies does Nevrest Labs use?</h2>
+        <p>${techLine}.</p>
+
+        <h2>Which industries does Nevrest Labs work in?</h2>
+        <p>${industries.map(esc).join(', ')}.</p>
+
+        <h2>What do clients ask before starting?</h2>
+        ${faqItems}
+
+        <h2>How do I contact Nevrest Labs?</h2>
+        <p>
+          Email <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>, or find us on
+          <a href="${esc(site.socials[0].url)}">LinkedIn</a>. We are in ${esc(site.city)}, ${esc(site.country)}, working
+          ${esc(site.utcOffset)}.
+        </p>
+        <p>A machine-readable summary of this site is available at <a href="/llms.txt">/llms.txt</a>.</p>
+      </div>
+    </noscript>`
+}
 
 export function headMetaTags() {
   const url = absolute('/')
@@ -152,7 +280,7 @@ export function headMetaTags() {
 
   return [
     `\n    <title>${title}</title>`,
-    tag('name', 'description', site.description),
+    tag('name', 'description', site.metaDescription),
     tag('name', 'keywords', site.keywords.join(', ')),
     tag('name', 'author', site.name),
     tag('name', 'robots', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'),
@@ -172,6 +300,11 @@ export function headMetaTags() {
     tag('property', 'og:url', url),
     tag('property', 'og:image', image),
     tag('property', 'og:image:alt', `${site.name} logo`),
+    tag('property', 'og:image:width', String(site.shareImageWidth)),
+    tag('property', 'og:image:height', String(site.shareImageHeight)),
+    tag('property', 'og:image:type', 'image/png'),
+    `\n    <link rel="alternate" hreflang="${site.lang}" href="${url}" />`,
+    `\n    <link rel="alternate" hreflang="x-default" href="${url}" />`,
     tag('name', 'twitter:card', 'summary_large_image'),
     tag('name', 'twitter:title', title),
     tag('name', 'twitter:description', site.summary),

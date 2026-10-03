@@ -16,10 +16,17 @@ export const site = {
   email: 'contact@nevrestlabs.com',
   logo: '/logo.png',
   // Open Graph wants a wide 1200x630 card; the square logo is the fallback until
-  // a dedicated og-image lands in /public.
+  // a dedicated og-image lands in /public. Declared dimensions must match the file.
   shareImage: '/logo.png',
+  shareImageWidth: 1080,
+  shareImageHeight: 1080,
   description:
     'Nevrest Labs is a software company in Kathmandu, Nepal. We build web platforms, mobile apps, AI and machine learning systems, automation tools, backend APIs and custom software for businesses.',
+  // Trimmed to sit inside the ~155-character snippet window. `description` above
+  // stays longer for schema.org and llms.txt, where length is not penalised.
+  metaDescription:
+    'Software company in Kathmandu, Nepal building web platforms, mobile apps, AI systems, automation tools, backend APIs and custom software.',
+  securityContact: 'security@nevrestlabs.com',
   summary: 'Your new basecamp for reliable next-gen software and IT services, shipped directly from Kathmandu, Nepal.',
   keywords: [
     'Nevrest Labs',
@@ -56,6 +63,17 @@ export const services = [
   { number: '07', title: 'UI/UX & product design', text: 'Clear interfaces and product experiences shaped around the people using them.' },
   { number: '08', title: 'Cloud & DevOps', text: 'Deployment, CI/CD, monitoring, and dependable production infrastructure.' },
 ]
+
+export const principles = [
+  'Engineering-first approach',
+  'Modern technology',
+  'Practical AI integration',
+  'Scalable architecture',
+  'User-focused design',
+]
+
+// The four-word capability stack shown in the hero.
+export const capabilityStack = ['WEB', 'AI', 'PRODUCT', 'SYSTEMS']
 
 export const technologies = [
   ['Frontend', 'React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
@@ -111,7 +129,7 @@ export const pageTitles = {
 }
 
 export const pageDescriptions = {
-  '/': site.description,
+  '/': site.metaDescription,
   '/projects':
     'Case studies from Nevrest Labs, a software company in Kathmandu, Nepal: live web and mobile products, AI and machine learning systems, automation tools and developer utilities we designed, built and shipped.',
   '/clients': 'The teams Nevrest Labs builds with in Nepal and beyond — digital agencies, production houses and software teams, with the kind of work we do for each of them.',

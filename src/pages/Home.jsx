@@ -8,7 +8,7 @@ import { ArtCover } from '../components/Shots.jsx'
 import { ClientCard } from '../components/ClientCard.jsx'
 import Seo from '../components/Seo.jsx'
 import { breadcrumb, faqPage, projectList, webPage } from '../lib/schema.js'
-import { faqs, fastFacts, founders, industries, pageDescriptions, pageTitles, services, site, technologies } from '../data/site.js'
+import { faqs, fastFacts, founders, industries, pageDescriptions, pageTitles, principles, services, site, technologies, capabilityStack } from '../data/site.js'
 import { clients } from '../data/clients.js'
 import { projects } from '../data/projects.js'
 
@@ -81,10 +81,9 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-stack" aria-label="Our core capabilities">
-          <span>WEB</span>
-          <span>AI</span>
-          <span>PRODUCT</span>
-          <span>SYSTEMS</span>
+          {capabilityStack.map((capability) => (
+            <span key={capability}>{capability}</span>
+          ))}
         </div>
         <div className="hero-note">
           N / 01
@@ -129,11 +128,9 @@ export default function Home() {
             </p>
             <p className="body-copy facts-lead">{site.summary}</p>
             <div className="principle-list">
-              <span>Engineering-first approach</span>
-              <span>Modern technology</span>
-              <span>Practical AI integration</span>
-              <span>Scalable architecture</span>
-              <span>User-focused design</span>
+              {principles.map((principle) => (
+                <span key={principle}>{principle}</span>
+              ))}
             </div>
             <dl className="facts" id="facts">
               {facts.map((fact) => (

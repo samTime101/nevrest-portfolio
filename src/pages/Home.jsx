@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
@@ -6,64 +6,29 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Arrow, Mark, Nav } from '../components/SiteChrome.jsx'
 import { ArtCover } from '../components/Shots.jsx'
 import { ClientCard } from '../components/ClientCard.jsx'
+import Seo from '../components/Seo.jsx'
+import { breadcrumb, faqPage, projectList, webPage } from '../lib/schema.js'
+import { faqs, fastFacts, founders, industries, pageDescriptions, pageTitles, services, site, technologies } from '../data/site.js'
 import { clients } from '../data/clients.js'
 import { projects } from '../data/projects.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const services = [
-  { number: '01', title: 'Web development', text: 'Modern, responsive web applications designed to grow with the business.' },
-  { number: '02', title: 'Mobile development', text: 'Thoughtful iOS and Android experiences with a product-first approach.' },
-  { number: '03', title: 'AI & machine learning', text: 'Practical AI systems, LLM applications, intelligent workflows, and automation.' },
-  { number: '04', title: 'Custom software', text: 'Business systems, dashboards, internal tools, and purpose-built applications.' },
-  { number: '05', title: 'Backend & APIs', text: 'Secure APIs, databases, integrations, authentication, and scalable architecture.' },
-  { number: '06', title: 'Automation', text: 'Connected workflows, AI agents, and process improvements that remove busywork.' },
-  { number: '07', title: 'UI/UX & product design', text: 'Clear interfaces and product experiences shaped around the people using them.' },
-  { number: '08', title: 'Cloud & DevOps', text: 'Deployment, CI/CD, monitoring, and dependable production infrastructure.' },
-]
-
-const technologies = [
-  ['Frontend', 'React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
-  ['Backend', 'Node.js', 'Python', 'FastAPI', 'Flask'],
-  ['Data', 'PostgreSQL', 'MySQL', 'MongoDB', 'Firebase'],
-  ['AI', 'OpenAI', 'Gemini', 'LangChain', 'Hugging Face', 'PyTorch'],
-  ['Infrastructure', 'Docker', 'Linux', 'Nginx', 'Cloudflare', 'Vercel'],
-]
-
-const industries = [
-  'Education',
-  'Healthcare',
-  'FinTech',
-  'E-Commerce',
-  'SaaS',
-  'Hospitality',
-  'Real Estate',
-  'Logistics',
-  'Media',
-  'Startups',
-  'Professional services',
-]
-
-const founders = [
-  { initials: 'SA', name: 'Sayuz Acharya', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/sayuz-acharya-13453643b/' },
-  { initials: 'SR', name: 'Samip Regmi', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/samip-regmi-670a76248' },
-  { initials: 'DD', name: 'Diwas Dahal', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/diwas-dahal/' },
-  { initials: 'SB', name: 'Sworup Bastola', role: 'Co-founder', linkedin: 'https://www.linkedin.com/in/swarup-bastola-357474398' },
-]
-
-const faqs = [  
-  ['What kind of projects do you build?', 'We build web platforms, mobile applications, internal tools, custom software, AI-enabled products, and automation systems.'],
-  ['Can you build custom AI solutions?', 'Yes. We can help identify a useful AI opportunity, design the right workflow, and build it into a reliable product or internal system.'],
-  ['Do you work with startups?', 'Yes. We work with early-stage teams as well as established businesses, from product direction through production delivery.'],
-  ['Can you work with an existing development team?', 'Absolutely. We can extend a team, take ownership of a defined product area, or provide focused technical and product support.'],
-  ['How long does a typical project take?', 'The answer depends on scope and complexity. We define a practical delivery plan during discovery before committing to a timeline.'],
-  ['Do you provide maintenance after launch?', "Yes. We can provide monitoring, ongoing improvements, technical support, and a plan for the product's next stage."],
-  ['What technologies do you use?', "We select tools around the product's needs, with experience across modern web, mobile, backend, AI, data, and cloud technologies."],
-]
+const facts = fastFacts()
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0)
   const pageRef = useRef(null)
+
+  const jsonLd = useMemo(
+    () => [
+      { key: 'webpage', data: webPage({ path: '/', name: pageTitles.home, description: pageDescriptions['/'] }) },
+      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }]) },
+      { key: 'faq', data: faqPage(faqs) },
+      { key: 'itemlist', data: projectList() },
+    ],
+    [],
+  )
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
@@ -92,6 +57,7 @@ export default function Home() {
 
   return (
     <div ref={pageRef}>
+      <Seo titleFull={pageTitles.home} description={pageDescriptions['/']} path="/" jsonLd={jsonLd} />
       <section className="hero" id="top">
         <Nav />
         <div className="hero-content shell">
@@ -161,6 +127,7 @@ export default function Home() {
               Nevrest Labs is a technology-focused company helping businesses turn ideas into reliable digital products. We pair
               engineering discipline with user-focused design so the things we build are useful today and maintainable tomorrow.
             </p>
+            <p className="body-copy facts-lead">{site.summary}</p>
             <div className="principle-list">
               <span>Engineering-first approach</span>
               <span>Modern technology</span>
@@ -168,6 +135,14 @@ export default function Home() {
               <span>Scalable architecture</span>
               <span>User-focused design</span>
             </div>
+            <dl className="facts" id="facts">
+              {facts.map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
           <div className="signal signal--lime">
             N<span>↗</span>

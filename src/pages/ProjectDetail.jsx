@@ -1,7 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
+import Seo from '../components/Seo.jsx'
+import { breadcrumb, softwareApplication, webPage } from '../lib/schema.js'
 import { getProject, projects } from '../data/projects.js'
 import '../projects.css'
 
@@ -10,17 +12,35 @@ export default function ProjectDetail() {
   const project = getProject(slug || '')
 
   useEffect(() => {
-    if (project) document.title = `${project.title} — Nevrest Labs`
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [slug, project])
+
+  const jsonLd = useMemo(() => {
+    if (!project) return []
+    const path = `/projects/${project.slug}`
+    return [
+      { key: 'webpage', data: webPage({ path, name: project.title, description: project.description, type: 'Article' }) },
+      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'Projects', path: '/projects' }, { name: project.title, path }]) },
+      { key: 'app', data: softwareApplication(project) },
+    ]
+  }, [project])
 
   if (!project) return <Navigate to="/projects" replace />
 
   const idx = projects.findIndex((p) => p.slug === project.slug)
   const next = projects[(idx + 1) % projects.length]
+  const hidden = Boolean(project.hidden)
 
   return (
     <div className="work-page case-page">
+      <Seo
+        titleFull={`${project.title} — Nevrest Labs`}
+        description={project.short}
+        path={`/projects/${project.slug}`}
+        image={project.cover}
+        noindex={hidden}
+        jsonLd={jsonLd}
+      />
       <section className={`case-hero case-hero--${project.accent}`}>
         <Nav />
         <div className="shell case-hero-inner">

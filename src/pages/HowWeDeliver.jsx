@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
+import Seo from '../components/Seo.jsx'
+import { breadcrumb, deliveryModelsNode, faqPage, webPage } from '../lib/schema.js'
+import { pageDescriptions, pageTitles } from '../data/site.js'
 import '../howdeliver.css'
 
 const subNav = [
@@ -573,12 +576,19 @@ function WorkflowTable({ rows }) {
 export default function HowWeDeliver() {
   const [openFaq, setOpenFaq] = useState(0)
 
-  useEffect(() => {
-    document.title = 'How We Deliver — Nevrest Labs'
-  }, [])
+  const jsonLd = useMemo(
+    () => [
+      { key: 'webpage', data: webPage({ path: '/how-we-deliver', name: pageTitles.delivery, description: pageDescriptions['/how-we-deliver'] }) },
+      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'How we deliver', path: '/how-we-deliver' }]) },
+      { key: 'models', data: deliveryModelsNode() },
+      { key: 'faq', data: faqPage(faqGroups.flatMap((group) => group.items)) },
+    ],
+    [],
+  )
 
   return (
     <div className="hd-page">
+      <Seo title={pageTitles.delivery} description={pageDescriptions['/how-we-deliver']} path="/how-we-deliver" jsonLd={jsonLd} />
       <Nav />
 
       <section className="hd-hero">

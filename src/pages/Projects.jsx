@@ -1,8 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
 import { ArtCover } from '../components/Shots.jsx'
+import Seo from '../components/Seo.jsx'
+import { breadcrumb, projectList, webPage } from '../lib/schema.js'
+import { pageDescriptions, pageTitles } from '../data/site.js'
 import { projects } from '../data/projects.js'
 import '../projects.css'
 
@@ -151,18 +154,24 @@ function AutomationMock() {
 export default function Projects() {
   const [filter, setFilter] = useState('All')
 
-  useEffect(() => {
-    document.title = 'Projects — Nevrest Labs'
-  }, [])
-
   const shown = useMemo(() => projects.filter((p) => !p.hidden), [])
   const filters = useMemo(() => ['All', ...new Set(shown.map((p) => p.status))], [shown])
   const visible = useMemo(() => (filter === 'All' ? shown : shown.filter((p) => p.status === filter)), [filter, shown])
   const liveCount = shown.filter((p) => p.status === 'Live').length
   const buildCount = shown.length - liveCount
 
+  const jsonLd = useMemo(
+    () => [
+      { key: 'webpage', data: webPage({ path: '/projects', name: pageTitles.projects, description: pageDescriptions['/projects'], type: 'CollectionPage' }) },
+      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'Projects', path: '/projects' }]) },
+      { key: 'itemlist', data: projectList(shown) },
+    ],
+    [shown],
+  )
+
   return (
     <div className="work-page">
+      <Seo title={pageTitles.projects} description={pageDescriptions['/projects']} path="/projects" type="website" jsonLd={jsonLd} />
       <section className="work-hero">
         <Nav />
         <div className="shell work-hero-inner">

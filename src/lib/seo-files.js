@@ -96,9 +96,11 @@ export function securityHeaders() {
 // `not_found_handling: "404-page"` from public/404.html with a real 404 status.
 // A `/*` rule would shadow every static asset, so it is avoided on purpose.
 export function redirectsFile() {
+  // `html_handling: "none"` in wrangler.jsonc means Cloudflare never resolves
+  // `/` to /index.html on its own, so the root is listed here explicitly like
+  // every other route. Without this rule the homepage returns a 404.
   const rewrites = routes
-    .filter(({ path }) => path !== '/')
-    .flatMap(({ path }) => [path, `${path}/`])
+    .flatMap(({ path }) => (path === '/' ? ['/'] : [path, `${path}/`]))
     .map((path) => `${path} /index.html 200`)
 
   return validateRedirects(`# App routes render the SPA shell (200). Unlisted paths fall through to 404.html.

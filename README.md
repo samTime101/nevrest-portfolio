@@ -42,7 +42,7 @@ relative target, numeric status). A malformed rule fails the build rather than t
 
 This deploys through **Workers Static Assets** (`wrangler deploy`), so `wrangler.jsonc` sets:
 
-- `html_handling: "none"` — no automatic `/projects` → `/projects/` redirects, so canonical URLs stay clean
+- `html_handling: "none"` — no automatic `/projects` → `/projects/` redirects, so canonical URLs stay clean. Consequence: Cloudflare stops resolving `/` to `index.html` on its own, so `_redirects` lists `/` explicitly like every other route
 - `not_found_handling: "404-page"` — unknown URLs return a real **404** served from `public/404.html` instead of a soft 404. App routes stay reachable via the `_redirects` rewrites, which are generated from the same `routes` list as the sitemap.
 
 Two things cannot be expressed in `_redirects`, because Cloudflare only allows relative targets there.

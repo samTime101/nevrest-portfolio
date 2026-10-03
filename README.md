@@ -31,18 +31,23 @@ Structured data, metadata and the machine-readable files are **generated at buil
 - **`/sitemap.xml`** — every route, derived from `src/lib/seo-files.js` `routes`
 - **`/llms.txt`** and **`/llms-full.txt`** — plain-text site summaries for AI assistants
 - **`/_headers`** — HSTS, CSP, `Contact:`, cache policy. CSP `script-src` uses SHA-256 hashes of the JSON-LD blocks this build emits, so no `'unsafe-inline'` is needed
-- **`/_redirects`** — canonical host pinning, plus a 200 rewrite to the SPA shell for each known route
+- **`/_redirects`** — a 200 rewrite to the SPA shell for each known route
+
+`_redirects` is validated at build time against Cloudflare's rules (one rule per line, 2–3 tokens,
+relative target, numeric status). A malformed rule fails the build rather than the deploy.
 
 ### Bump `site.lastModified` in `src/data/site.js` when content changes — it feeds `sitemap.xml`.
 
 ### Routing notes
 
-`wrangler.jsonc` sets `not_found_handling: "none"` so unknown URLs return a real **404** (served from
-`public/404.html`) instead of a soft 404. App routes stay reachable via the `_redirects` rewrites above, which
-are generated from the same `routes` list.
+This deploys through **Workers Static Assets** (`wrangler deploy`), so `wrangler.jsonc` sets:
 
-Two things live in the Cloudflare dashboard, not in the repo: **Always Use HTTPS** and **www → apex**
-canonicalisation. Confirm both are on after the next deploy.
+- `html_handling: "none"` — no automatic `/projects` → `/projects/` redirects, so canonical URLs stay clean
+- `not_found_handling: "404-page"` — unknown URLs return a real **404** served from `public/404.html` instead of a soft 404. App routes stay reachable via the `_redirects` rewrites, which are generated from the same `routes` list as the sitemap.
+
+Two things cannot be expressed in `_redirects`, because Cloudflare only allows relative targets there.
+Both live in the Cloudflare zone config: **Always Use HTTPS** (SSL/TLS) and **www → apex**
+(Redirect Rules). Confirm both are on after the next deploy.
 
 ### Known gap
 

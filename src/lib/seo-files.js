@@ -87,27 +87,49 @@ export function securityHeaders() {
 `
 }
 
-// Cloudflare Pages `_redirects`. Two jobs only: pin the canonical host, and
-// rewrite known app routes to the SPA shell with a 200. There is deliberately no
-// catch-all — unmatched paths are handled by `not_found_handling: "none"` +
-// 404.html, which Pages serves with a real 404 status. A `/*` rule here would
-// shadow every static asset, so it is avoided on purpose.
+// Cloudflare `_redirects`. Each rule must be a single line of
+// "from to [status]", and the target must be a relative URL — Cloudflare rejects
+// absolute targets outright, so host canonicalisation (www → apex, http → https)
+// lives in the Cloudflare zone config, not here.
+//
+// There is deliberately no catch-all: unmatched paths are served by
+// `not_found_handling: "404-page"` from public/404.html with a real 404 status.
+// A `/*` rule would shadow every static asset, so it is avoided on purpose.
 export function redirectsFile() {
   const rewrites = routes
     .filter(({ path }) => path !== '/')
     .flatMap(({ path }) => [path, `${path}/`])
-    .map((path) => `${path}  /index.html  200`)
+    .map((path) => `${path} /index.html 200`)
 
-  return `# Canonical host. Cloudflare terminates TLS before Pages sees the request,
-# so these cover anything arriving on a bare host or a different entry point.
-http://nevrestlabs.com/*
-  https://nevrestlabs.com/:splat  301
-https://www.nevrestlabs.com/*
-  https://nevrestlabs.com/:splat  301
-
-# App routes render the SPA shell (200). Everything else falls through to 404.html.
+  return validateRedirects(`# App routes render the SPA shell (200). Unlisted paths fall through to 404.html.
 ${rewrites.join('\n')}
-`
+`)
+}
+
+// Cloudflare validates `_redirects` on deploy and fails the whole upload on a bad
+// rule. These are its rules, checked at build time so a mistake is a failed build
+// rather than a failed deploy: exactly 2 or 3 whitespace-separated tokens per line,
+// a relative target, and a numeric status when a third token is present.
+const STATUS = /^(?:[1-5]\d{2}|301|302)$/
+
+export function validateRedirects(text) {
+  text.split('\n').forEach((raw, index) => {
+    const line = raw.trim()
+    if (!line || line.startsWith('#')) return
+
+    const tokens = line.split(/\s+/)
+    if (tokens.length < 2 || tokens.length > 3) {
+      throw new Error(`_redirects line ${index + 1}: expected 2 or 3 whitespace-separated tokens, got ${tokens.length} — "${line}"`)
+    }
+    if (!tokens[1].startsWith('/')) {
+      throw new Error(`_redirects line ${index + 1}: only relative URLs are allowed, got "${tokens[1]}"`)
+    }
+    if (tokens.length === 3 && !STATUS.test(tokens[2])) {
+      throw new Error(`_redirects line ${index + 1}: invalid status "${tokens[2]}"`)
+    }
+  })
+
+  return text
 }
 
 export const routes = [

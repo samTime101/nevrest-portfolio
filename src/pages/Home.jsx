@@ -350,10 +350,12 @@ export default function Home() {
           <div>
             {faqs.map(([question, answer], index) => (
               <article className={`faq-item ${openFaq === index ? 'faq-item--open' : ''}`} key={question}>
-                <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}>
-                  <span>{question}</span>
-                  <b>{openFaq === index ? '−' : '+'}</b>
-                </button>
+                <h3 className="faq-question">
+                  <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}>
+                    <span>{question}</span>
+                    <b>{openFaq === index ? '−' : '+'}</b>
+                  </button>
+                </h3>
                 <div>
                   <p>{answer}</p>
                 </div>

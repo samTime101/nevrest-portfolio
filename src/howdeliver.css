@@ -619,6 +619,12 @@
   letter-spacing: -0.02em;
 }
 
+.hd-faq-item summary h3 {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
 .hd-faq-item summary::-webkit-details-marker {
   display: none;
 }

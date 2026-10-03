@@ -1,16 +1,16 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { headMetaTags, llmsFullTxt, llmsTxt, schemaTags, sitemapXml } from './src/lib/seo-files.js'
+import { headMetaTags, llmsFullTxt, llmsTxt, redirectsFile, schemaTags, securityHeaders, sitemapXml } from './src/lib/seo-files.js'
 
 /**
- * GEO layer: everything a crawler or language model needs before JavaScript runs
- * is generated at build time from src/data/site.js — the head block, JSON-LD,
- * sitemap.xml, llms.txt and llms-full.txt.
+ * GEO + hosting layer. Everything a crawler, a language model or a security
+ * scanner needs is generated at build time from src/data/site.js: the head block,
+ * JSON-LD, sitemap.xml, llms.txt, llms-full.txt, Cloudflare Pages `_headers` and
+ * `_redirects`. Nothing here can drift out of sync with the site content.
  */
 function geoPlugin() {
-  const sitemap = sitemapXml()
   const files = {
-    '/sitemap.xml': [sitemap, 'application/xml'],
+    '/sitemap.xml': [sitemapXml(), 'application/xml'],
     '/llms.txt': [llmsTxt(), 'text/plain'],
     '/llms-full.txt': [llmsFullTxt(), 'text/plain'],
   }
@@ -23,9 +23,11 @@ function geoPlugin() {
     },
 
     generateBundle() {
-      Object.entries(files).forEach(([fileName, [source]]) => {
-        this.emitFile({ type: 'asset', fileName: fileName.slice(1), source })
-      })
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: files['/sitemap.xml'][0] })
+      this.emitFile({ type: 'asset', fileName: 'llms.txt', source: files['/llms.txt'][0] })
+      this.emitFile({ type: 'asset', fileName: 'llms-full.txt', source: files['/llms-full.txt'][0] })
+      this.emitFile({ type: 'asset', fileName: '_headers', source: securityHeaders() })
+      this.emitFile({ type: 'asset', fileName: '_redirects', source: redirectsFile() })
     },
 
     configureServer(server) {

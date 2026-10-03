@@ -802,7 +802,7 @@ export default function HowWeDeliver() {
                             setOpenFaq(openFaq === index ? -1 : index)
                           }}
                         >
-                          {question}
+                          <h3>{question}</h3>
                         </summary>
                         <p>{answer}</p>
                       </details>

@@ -2,6 +2,8 @@
 // runs: the <head> block in index.html, sitemap.xml, llms.txt and llms-full.txt.
 // Imported by vite.config.js, so it must stay free of DOM access.
 
+import { createHash } from 'node:crypto'
+
 import { clients } from '../data/clients.js'
 import {
   deliveryModels,
@@ -15,6 +17,98 @@ import {
   technologies,
 } from '../data/site.js'
 import { absolute, faqPage, jsonLdScript, projectList, siteGraph } from './schema.js'
+
+// Cloudflare Pages `_headers`. CSP script hashes are derived from the same JSON-LD
+// nodes schemaTags() emits, so the strict policy always matches what we ship and
+// script-src needs no 'unsafe-inline'.
+export function securityHeaders() {
+  const hashes = schemaHashes().join(' ')
+
+  const csp = [
+    "default-src 'self'",
+    'base-uri \'self\'',
+    'object-src \'none\'',
+    'frame-ancestors \'none\'',
+    'form-action \'self\'',
+    `script-src 'self'${hashes ? ` ${hashes}` : ''}`,
+    // Framer Motion writes style attributes at runtime, and index.css @imports Google Fonts.
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: https:",
+    "connect-src 'self'",
+    'frame-src https://www.youtube-nocookie.com https://www.youtube.com',
+    "manifest-src 'self'",
+    'upgrade-insecure-requests',
+  ].join('; ')
+
+  return `/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Content-Security-Policy: ${csp}
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  Contact: ${site.email}
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  Expires: Fri, 01 Jan 2032 00:00:00 GMT
+
+/logo.png
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/clients/*
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/work/*
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+`
+}
+
+// Cloudflare Pages `_redirects`. Two jobs only: pin the canonical host, and
+// rewrite known app routes to the SPA shell with a 200. There is deliberately no
+// catch-all — unmatched paths are handled by `not_found_handling: "none"` +
+// 404.html, which Pages serves with a real 404 status. A `/*` rule here would
+// shadow every static asset, so it is avoided on purpose.
+export function redirectsFile() {
+  const rewrites = routes
+    .filter(({ path }) => path !== '/')
+    .flatMap(({ path }) => [path, `${path}/`])
+    .map((path) => `${path}  /index.html  200`)
+
+  return `# Canonical host. Cloudflare terminates TLS before Pages sees the request,
+# so these cover anything arriving on a bare host or a different entry point.
+http://nevrestlabs.com/*
+  https://nevrestlabs.com/:splat  301
+https://www.nevrestlabs.com/*
+  https://nevrestlabs.com/:splat  301
+
+# App routes render the SPA shell (200). Everything else falls through to 404.html.
+${rewrites.join('\n')}
+`
+}
 
 export const routes = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
@@ -64,6 +158,13 @@ export function headMetaTags() {
 
 export function schemaTags() {
   return [jsonLdScript(siteGraph()), jsonLdScript(faqPage(faqs), 'faq'), jsonLdScript(projectList(), 'itemlist')].join('')
+}
+
+// SHA-256 of each inline JSON-LD block this build emits, for CSP script-src.
+// Hashing the nodes themselves (rather than scraping the HTML) keeps the policy
+// exactly in step with schemaTags() above.
+export function schemaHashes() {
+  return [siteGraph(), faqPage(faqs), projectList()].map((node) => `'sha256-${createHash('sha256').update(JSON.stringify(node), 'utf8').digest('base64')}'`)
 }
 
 export function sitemapXml(lastModified = site.lastModified) {

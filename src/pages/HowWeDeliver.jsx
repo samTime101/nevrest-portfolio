@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
 import Seo from '../components/Seo.jsx'
-import { breadcrumb, deliveryModelsNode, faqPage, webPage } from '../lib/schema.js'
-import { pageDescriptions, pageTitles } from '../data/site.js'
+import { routeHead } from '../lib/route-head.js'
+import { faqGroups } from '../data/site.js'
 import '../howdeliver.css'
 
 const subNav = [
@@ -175,131 +175,6 @@ const exitSteps = [
   ['o', 'Continue, expand or close'],
 ]
 
-const faqGroups = [
-  {
-    title: 'Budget and payment',
-    items: [
-      [
-        'How much will this cost?',
-        'It depends on the model. Project-based work is quoted as a fixed price for the agreed scope. Staff augmentation and dedicated teams are priced per person or role, per month. Rates are set out in your proposal. You see the full number in writing before anything starts.',
-      ],
-      [
-        'How do you arrive at the number?',
-        'During discovery our Technical Lead estimates the engineering and our Delivery Lead estimates schedule and team size. You get the result with the assumptions behind it, so you can see what drives the cost.',
-      ],
-      [
-        'Our budget is limited. Can we still start?',
-        'Yes. Tell us your ceiling in the first call. We will shrink the first release to what fits and plan the rest as later phases, rather than stretch a small budget across everything.',
-      ],
-      [
-        'What if the scope changes midway?',
-        'Every change goes through a change register. Our Technical Lead checks the technical impact, our Delivery Lead the time impact, and Client Communication brings you the revised cost and date. Nothing extra is built or billed until you approve it.',
-      ],
-      [
-        'Are there costs outside your fee?',
-        'Third-party items such as hosting, licences, app-store fees and paid APIs are listed in the proposal and billed to your own accounts where possible, so nothing appears as a surprise.',
-      ],
-      [
-        'How and when do we pay?',
-        'Project work is paid against milestones. Staff and team engagements are paid monthly. The exact schedule sits in the agreement.',
-      ],
-    ],
-  },
-  {
-    title: 'Timeline and start',
-    items: [
-      [
-        'How long will it take?',
-        'You get a dated milestone plan for approval before execution begins. It comes from our Delivery Lead’s schedule and the Technical Lead’s estimate, not a guess.',
-      ],
-      [
-        'When can we start?',
-        'After the agreement is signed and handover to delivery is complete. For staff augmentation the start date depends on sourcing and your approval of candidates. We give you that date at proposal stage.',
-      ],
-      [
-        'What if we fall behind?',
-        'Our Delivery Lead tracks risks and blockers continuously. If a date is at risk you hear it from us in the next update, together with the recovery plan and any decision we need from you.',
-      ],
-    ],
-  },
-  {
-    title: 'Communication',
-    items: [
-      ['Who is my contact?', 'One person: your Client Communication Lead, from discovery to close. You never have to work out who to ask.'],
-      [
-        'Will I speak with the engineers?',
-        'In staff augmentation, yes, they work inside your team. In other models, our leads speak to you and engineers join calls where useful. Working hours and overlap (we are in Kathmandu, UTC+5:45) are agreed at kickoff.',
-      ],
-      [
-        'How will I know what is happening?',
-        'Regular progress updates (weekly for teams), decisions needed from you called out clearly, periodic reviews, and a demo before you accept a project.',
-      ],
-    ],
-  },
-  {
-    title: 'Quality, ownership and risk',
-    items: [
-      [
-        'Do we have to share confidential details to get started?',
-        'No. We can give you a first, conditional answer from non-sensitive basics such as the product type, stack and timeline. Confidential briefs and end-client details come only after an NDA, and an agency never has to name its end client.',
-      ],
-      [
-        'Who owns the code and the product?',
-        'You do. Ownership is written into the agreement and we hand over source, documentation and access at exit. The exact terms are in your agreement.',
-      ],
-      [
-        'How do you protect our confidential information?',
-        'Confidentiality is agreed before we go deep into your requirements, and access rules are set at onboarding. Access rules and security practices are agreed in your proposal.',
-      ],
-      [
-        'How do you make sure the work is good?',
-        'Our Technical Lead reviews the technical work throughout and validates the result against acceptance criteria you approved. A project is only closed when you accept it.',
-      ],
-      [
-        'What if an engineer is not the right fit?',
-        'Tell your Client Communication Lead. We run the replacement process: the Technical Lead verifies the new person and the Delivery Lead manages the transition.',
-      ],
-      [
-        'What happens after launch?',
-        'You receive the handover package. At exit we discuss support, continuation or new work, and you can move into a dedicated team or retainer. Support terms are set out in your proposal.',
-      ],
-    ],
-  },
-  {
-    title: 'Contracts and paperwork',
-    items: [
-      [
-        'Who handles the NDA, contract and invoicing?',
-        'Our Business Development Lead. You sign an NDA first, then a master agreement and a statement of work covering scope, payment terms, ownership and confidentiality. Your Client Communication Lead stays your contact for everything else. Agreement templates: in preparation.',
-      ],
-      [
-        'What paperwork do you need from us?',
-        'Company details, an authorized signatory, tax and invoicing information, and any compliance requirements your industry or country adds. We ask only for what the agreement needs.',
-      ],
-      [
-        'Do you handle legal and regulatory requirements?',
-        'We coordinate and flag them, and our Technical Lead covers the technical side. We don’t give legal advice, so where terms or compliance matter we recommend each side gets its own legal review. Governing law: agreed in the contract.',
-      ],
-    ],
-  },
-  {
-    title: 'Fit',
-    items: [
-      [
-        'I am not technical, or not sure what I need.',
-        'That is what discovery is for. We turn your goals into requirements and a recommended model in plain language, and you confirm before anything is signed.',
-      ],
-      [
-        'Can we change models later?',
-        'Yes, at review points. A finished project can become a dedicated team, or a team can scale up or down as needs change.',
-      ],
-      [
-        'We are an agency. Can you work behind our brand?',
-        'Yes. That is our white-label overlay: we talk only to you, follow your reporting format, and never contact your end client unless you say so.',
-      ],
-    ],
-  },
-]
 
 const fitAnswers = [
   {
@@ -576,19 +451,11 @@ function WorkflowTable({ rows }) {
 export default function HowWeDeliver() {
   const [openFaq, setOpenFaq] = useState(0)
 
-  const jsonLd = useMemo(
-    () => [
-      { key: 'webpage', data: webPage({ path: '/how-we-deliver', name: pageTitles.delivery, description: pageDescriptions['/how-we-deliver'] }) },
-      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'How we deliver', path: '/how-we-deliver' }]) },
-      { key: 'models', data: deliveryModelsNode() },
-      { key: 'faq', data: faqPage(faqGroups.flatMap((group) => group.items)) },
-    ],
-    [],
-  )
+  const head = useMemo(() => routeHead('/how-we-deliver'), [])
 
   return (
     <div className="hd-page">
-      <Seo title={pageTitles.delivery} description={pageDescriptions['/how-we-deliver']} path="/how-we-deliver" jsonLd={jsonLd} />
+      <Seo {...head} />
       <Nav />
 
       <section className="hd-hero">

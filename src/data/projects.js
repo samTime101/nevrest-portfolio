@@ -16,10 +16,10 @@ export const projects = [
     stack: ['React', 'WebRTC', 'WebSockets', 'Cloudflare'],
     accent: 'coral',
     year: '2025 — Present',
-    cover: '/work/omedate-home.png',
+    cover: '/work/omedate-home.webp',
     shots: [
       {
-        src: '/work/omedate-home.png',
+        src: '/work/omedate-home.webp',
         alt: 'OmeDate home screen with Random Chat and 60-second Blind Date options',
         caption: 'Home — Random Chat and 60-second Blind Date entry · omedate.nevrestlabs.com',
       },
@@ -61,17 +61,17 @@ export const projects = [
     accent: 'lime',
     year: '2025 — Present',
     screenshotNote: 'Screenshots coming soon.',
-    cover: '/work/nepse-market.png',
+    cover: '/work/nepse-market.webp',
     videoId: 'QMlrXjQg-Yg',
     videoCaption: 'NEPSE Terminal walkthrough',
     shots: [
       {
-        src: '/work/nepse-market.png',
+        src: '/work/nepse-market.webp',
         alt: 'NEPSE Terminal market overview with breadth stats and live market feed',
         caption: 'Market Overview — breadth, turnover and the live market feed, updating every 30s',
       },
       {
-        src: '/work/nepse-backtest.png',
+        src: '/work/nepse-backtest.webp',
         alt: 'NEPSE Terminal Model Lab backtest equity curves and strategy returns',
         caption: 'Model Lab — Top-5 5D (+21.5%) and 20D (+26.9%) backtest equity from Rs. 500k, fees + slippage included',
       },
@@ -153,19 +153,19 @@ export const projects = [
     title: 'Automation Suite',
     tagline: 'Record once. Replay forever.',
     short:
-      'Python-based desktop app that streamlines repetitive marketing and data workflows — GUI workflow recording, CSV tools, contact scraping, and SMTP bulk email in one window.',
+      'Python desktop app for repetitive marketing and data work — GUI workflow recording, CSV tools, contact scraping and SMTP bulk email in one window.',
     description:
       'Nevrest Labs Automation Suite is a Python-based desktop application designed to streamline repetitive digital marketing and data-management workflows. The platform combines a GUI workflow recorder, CSV cleaning and merging tools, website contact scraping, and SMTP-based bulk email automation — with live progress tracking and structured JSON/CSV exports throughout.',
     tags: ['Automation', 'Python', 'Desktop', 'Marketing'],
     stack: ['Python', 'Desktop GUI', 'SMTP', 'CSV / JSON'],
     accent: 'amber',
     year: 'In use — internal',
-    cover: '/work/automation-suite.png',
+    cover: '/work/automation-suite.webp',
     videoId: 'P7rEVGPEEGk',
     videoCaption: 'Automation Suite walkthrough — recorder, scraper and bulk email in action',
     shots: [
       {
-        src: '/work/automation-suite.png',
+        src: '/work/automation-suite.webp',
         alt: 'Automation Suite workflow recorder with record, run and stop controls',
         caption: 'Workflow Recorder — mouse + keyboard capture with paginated replay',
       },
@@ -204,17 +204,17 @@ export const projects = [
     title: 'Mail Studio',
     tagline: 'Campaigns as flows.',
     short:
-      'Visual email workflow automation built with React and React Flow — import JSON records, loop recipients, add delays, and send personalized campaigns through a protected mail API.',
+      'Visual email workflow automation with React and React Flow — import JSON records, loop recipients, add delays and send campaigns via a protected mail API.',
     description:
       'Mail Studio is a visual email workflow automation platform built with React and React Flow. It enables users to create and run personalized email campaigns by importing JSON records, looping through recipients, adding timed delays, and inserting dynamic fields into email addresses, subjects, text, and HTML content. The platform includes a secure login system, light and dark themes, workflow monitoring, live execution logs, and server-side email delivery to keep SMTP credentials out of the browser. It is deployed with Vite and Vercel and connects to a protected backend mail API for reliable message delivery.',
     tags: ['Automation', 'React', 'React Flow', 'Email'],
     stack: ['React', 'React Flow', 'Vite', 'Vercel', 'Mail API'],
     accent: 'lime',
     year: 'Shipped — in use',
-    cover: '/work/mail-studio.png',
+    cover: '/work/mail-studio.webp',
     shots: [
       {
-        src: '/work/mail-studio.png',
+        src: '/work/mail-studio.webp',
         alt: 'Mail Studio renewal outreach flow with trigger, loop, wait and email nodes',
         caption: 'Renewal outreach — trigger → loop → wait → email, with dynamic fields in every message',
       },
@@ -307,10 +307,10 @@ export const projects = [
     stack: ['React', 'GIS mapping', 'Geospatial data', 'Rules engine'],
     accent: 'teal',
     year: 'Shipped — in use',
-    cover: '/work/compliance-compass.png',
+    cover: '/work/compliance-compass.webp',
     shots: [
       {
-        src: '/work/compliance-compass.png',
+        src: '/work/compliance-compass.webp',
         alt: 'Compliance Compass map with flight clearance verdict and permit checklist',
         caption: 'Pin-drop clearance — verdict plus the exact permits required',
       },

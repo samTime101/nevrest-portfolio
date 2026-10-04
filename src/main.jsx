@@ -1,9 +1,14 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-createRoot(document.getElementById('root')).render(
+// hydrateRoot, not createRoot: scripts/prerender.mjs writes the rendered markup of
+// this same tree into dist at build time, so the browser adopts the existing DOM
+// instead of discarding and rebuilding it. That avoids a visible flash and a
+// duplicate render pass on every page load.
+hydrateRoot(
+  document.getElementById('root'),
   <StrictMode>
     <App />
   </StrictMode>,

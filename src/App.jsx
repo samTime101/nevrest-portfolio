@@ -26,9 +26,13 @@ function ScrollManager() {
   return null
 }
 
-function App() {
+// The routed tree, without a router around it. App.jsx wraps this in a
+// BrowserRouter for the browser; scripts/prerender.mjs wraps the same component
+// in a StaticRouter to render each route to static HTML at build time, so both
+// environments always produce identical markup.
+export function AppRoutes() {
   return (
-    <BrowserRouter>
+    <>
       <ScrollManager />
       <main>
         <Routes>
@@ -41,8 +45,14 @@ function App() {
         </Routes>
         <Footer />
       </main>
-    </BrowserRouter>
+    </>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  )
+}

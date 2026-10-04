@@ -7,12 +7,15 @@ import { Arrow, Mark, Nav } from '../components/SiteChrome.jsx'
 import { ArtCover } from '../components/Shots.jsx'
 import { ClientCard } from '../components/ClientCard.jsx'
 import Seo from '../components/Seo.jsx'
-import { breadcrumb, faqPage, projectList, webPage } from '../lib/schema.js'
-import { faqs, fastFacts, founders, industries, pageDescriptions, pageTitles, principles, services, site, technologies, capabilityStack } from '../data/site.js'
+import { routeHead } from '../lib/route-head.js'
+import { faqs, fastFacts, founders, industries, principles, services, site, technologies, capabilityStack } from '../data/site.js'
 import { clients } from '../data/clients.js'
 import { projects } from '../data/projects.js'
 
-gsap.registerPlugin(ScrollTrigger)
+// ScrollTrigger reaches for document/window on registration, so only register it
+// in a browser. The prerenderer (scripts/prerender.mjs) imports this module in
+// Node to render static HTML, and must not blow up at import time.
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger)
 
 const facts = fastFacts()
 
@@ -20,15 +23,7 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState(0)
   const pageRef = useRef(null)
 
-  const jsonLd = useMemo(
-    () => [
-      { key: 'webpage', data: webPage({ path: '/', name: pageTitles.home, description: pageDescriptions['/'] }) },
-      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }]) },
-      { key: 'faq', data: faqPage(faqs) },
-      { key: 'itemlist', data: projectList() },
-    ],
-    [],
-  )
+  const head = useMemo(() => routeHead('/'), [])
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
@@ -57,7 +52,7 @@ export default function Home() {
 
   return (
     <div ref={pageRef}>
-      <Seo titleFull={pageTitles.home} description={pageDescriptions['/']} path="/" jsonLd={jsonLd} />
+      <Seo {...head} />
       <section className="hero" id="top">
         <Nav />
         <div className="hero-content shell">

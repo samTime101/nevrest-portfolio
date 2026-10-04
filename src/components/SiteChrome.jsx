@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import logo from '../assets/logo.png'
+// Public path, not an import: see the note in scripts/prepare-images.mjs. Vite's
+// SSR pass (used by the prerenderer) does not rewrite asset imports, so an
+// imported image ships as "/src/assets/…" in the prerendered HTML and 404s.
+const logo = '/logo-mark.webp'
 
 export function Mark({ small = false }) {
   return (

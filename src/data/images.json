@@ -1,0 +1,17 @@
+{
+  "/og-card.png": {
+    "width": 1200,
+    "height": 630,
+    "type": "image/png"
+  },
+  "/logo-512.webp": {
+    "width": 512,
+    "height": 512,
+    "type": "image/webp"
+  },
+  "/logo-mark.webp": {
+    "width": 320,
+    "height": 320,
+    "type": "image/webp"
+  }
+}

@@ -224,6 +224,22 @@ export function siteGraph() {
   }
 }
 
+/**
+ * Every node for one page as a single @graph: the site-level entities plus the
+ * route's own nodes.
+ *
+ * One graph per page rather than a separate inline <script> per node, because
+ * Cloudflare discards any `_headers` line longer than 2000 characters. With one
+ * script per node this build needed 32 CSP hashes and the whole policy was
+ * silently dropped; one graph per route needs 10 and leaves room to grow.
+ */
+export function pageGraph(nodes = []) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [...siteGraph()['@graph'], ...nodes],
+  }
+}
+
 export function jsonLdScript(data, key) {
   const attribute = key ? ` data-seo="${key}"` : ''
   return `<script type="application/ld+json"${attribute}>${JSON.stringify(data)}</script>`

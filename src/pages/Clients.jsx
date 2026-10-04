@@ -4,24 +4,16 @@ import { motion } from 'framer-motion'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
 import { ClientCard } from '../components/ClientCard.jsx'
 import Seo from '../components/Seo.jsx'
-import { breadcrumb, clientList, webPage } from '../lib/schema.js'
-import { pageDescriptions, pageTitles } from '../data/site.js'
+import { routeHead } from '../lib/route-head.js'
 import { clients } from '../data/clients.js'
 import '../projects.css'
 
 export default function Clients() {
-  const jsonLd = useMemo(
-    () => [
-      { key: 'webpage', data: webPage({ path: '/clients', name: pageTitles.clients, description: pageDescriptions['/clients'], type: 'CollectionPage' }) },
-      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'Clients', path: '/clients' }]) },
-      { key: 'clients', data: clientList() },
-    ],
-    [],
-  )
+  const head = useMemo(() => routeHead('/clients'), [])
 
   return (
     <div className="work-page clients-page">
-      <Seo title={pageTitles.clients} description={pageDescriptions['/clients']} path="/clients" jsonLd={jsonLd} />
+      <Seo {...head} />
       <section className="work-hero">
         <Nav />
         <div className="shell work-hero-inner">

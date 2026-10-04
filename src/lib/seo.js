@@ -1,10 +1,10 @@
 // Runtime head manager. Sets title, meta, canonical and Open Graph / Twitter tags
-// per route, and owns the JSON-LD blocks tagged with data-seo="<key>" — including
-// the ones the build injects into index.html, so a route never declares content it
-// does not show. Untagged blocks (the site entity graph) are left alone.
+// per route, and owns the page's JSON-LD graph tagged data-seo="graph" — the same
+// block the build writes, so a client-side navigation replaces it in place rather
+// than leaving the previous route's structured data behind.
 
 import { site } from '../data/site.js'
-import { absolute } from './schema.js'
+import { absolute, pageGraph } from './schema.js'
 
 const MANAGED = 'data-seo'
 
@@ -31,24 +31,17 @@ function setLink(rel, href, attributes = {}) {
 }
 
 function syncJsonLd(blocks) {
-  const wanted = new Set(blocks.map((block) => block.key))
+  const json = JSON.stringify(pageGraph(blocks.map(({ data }) => data)))
+  let element = document.head.querySelector(`script[${MANAGED}="graph"]`)
 
-  document.head.querySelectorAll(`script[${MANAGED}]`).forEach((element) => {
-    if (!wanted.has(element.getAttribute(MANAGED))) element.remove()
-  })
+  if (!element) {
+    element = document.createElement('script')
+    element.type = 'application/ld+json'
+    element.setAttribute(MANAGED, 'graph')
+    document.head.appendChild(element)
+  }
 
-  blocks.forEach(({ key, data }) => {
-    const json = JSON.stringify(data)
-    let element = document.head.querySelector(`script[${MANAGED}="${key}"]`)
-
-    if (!element) {
-      element = document.createElement('script')
-      element.type = 'application/ld+json'
-      element.setAttribute(MANAGED, key)
-      document.head.appendChild(element)
-    }
-    if (element.textContent !== json) element.textContent = json
-  })
+  if (element.textContent !== json) element.textContent = json
 }
 
 export function applySeo({ title, titleFull, description, path, image, type = 'website', noindex = false, jsonLd = [] }) {

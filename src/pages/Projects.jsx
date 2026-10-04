@@ -4,8 +4,7 @@ import { motion } from 'framer-motion'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
 import { ArtCover } from '../components/Shots.jsx'
 import Seo from '../components/Seo.jsx'
-import { breadcrumb, projectList, webPage } from '../lib/schema.js'
-import { pageDescriptions, pageTitles } from '../data/site.js'
+import { routeHead } from '../lib/route-head.js'
 import { projects } from '../data/projects.js'
 import '../projects.css'
 
@@ -160,18 +159,11 @@ export default function Projects() {
   const liveCount = shown.filter((p) => p.status === 'Live').length
   const buildCount = shown.length - liveCount
 
-  const jsonLd = useMemo(
-    () => [
-      { key: 'webpage', data: webPage({ path: '/projects', name: pageTitles.projects, description: pageDescriptions['/projects'], type: 'CollectionPage' }) },
-      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'Projects', path: '/projects' }]) },
-      { key: 'itemlist', data: projectList(shown) },
-    ],
-    [shown],
-  )
+  const head = useMemo(() => routeHead('/projects'), [])
 
   return (
     <div className="work-page">
-      <Seo title={pageTitles.projects} description={pageDescriptions['/projects']} path="/projects" type="website" jsonLd={jsonLd} />
+      <Seo {...head} />
       <section className="work-hero">
         <Nav />
         <div className="shell work-hero-inner">

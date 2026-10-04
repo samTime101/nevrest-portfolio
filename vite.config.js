@@ -4,7 +4,6 @@ import {
   headMetaTags,
   llmsFullTxt,
   llmsTxt,
-  noscriptFallback,
   redirectsFile,
   schemaTags,
   securityHeaders,
@@ -16,6 +15,10 @@ import {
  * scanner needs is generated at build time from src/data/site.js: the head block,
  * JSON-LD, sitemap.xml, llms.txt, llms-full.txt, Cloudflare Pages `_headers` and
  * `_redirects`. Nothing here can drift out of sync with the site content.
+ *
+ * This produces the *shell* (the homepage's head, and every route-specific file
+ * it drives). scripts/prerender.mjs then runs afterwards and writes one real HTML
+ * document per route, replacing the shell's head and filling in <div id="root">.
  */
 function geoPlugin() {
   const files = {
@@ -29,9 +32,8 @@ function geoPlugin() {
 
     transformIndexHtml(html) {
       return html
-        .replace('<!--geo:meta-->', headMetaTags())
-        .replace('<!--geo:schema-->', schemaTags())
-        .replace('<!--geo:noscript-->', noscriptFallback())
+        .replace('<!--geo:meta-->', headMetaTags('/'))
+        .replace('<!--geo:schema-->', schemaTags('/'))
     },
 
     generateBundle() {

@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+/* Google Fonts is loaded from a <link> in index.html, not with @import. An
+   @import inside a bundled stylesheet cannot start downloading until this
+   stylesheet has itself been fetched and parsed, which puts a third-party
+   round-trip in front of first paint. The <link> version runs in parallel. */
 :root { --ink: #101113; --paper: #f2f1ec; --muted: #a8a8a1; --lime: #d5f66a; --coral: #ff745e; --violet: #b2a5ff; --rule: rgba(242,241,236,.18); --sans: 'Manrope', sans-serif; --mono: 'DM Mono', monospace; }
 main { overflow: hidden; background: var(--ink); }
 .shell { width: min(1180px, calc(100% - 96px)); margin: 0 auto; position: relative; z-index: 1; }

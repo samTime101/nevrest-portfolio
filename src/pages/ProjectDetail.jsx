@@ -3,9 +3,14 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Arrow, Nav } from '../components/SiteChrome.jsx'
 import Seo from '../components/Seo.jsx'
-import { breadcrumb, softwareApplication, webPage } from '../lib/schema.js'
+import { routeHead } from '../lib/route-head.js'
 import { getProject, projects } from '../data/projects.js'
 import '../projects.css'
+
+// Hidden projects are excluded from `routes`, the sitemap and the prerender, so
+// they have no page to link to. The prev/next carousel must walk the same
+// published list or it hands visitors a 404.
+const published = projects.filter((p) => !p.hidden)
 
 export default function ProjectDetail() {
   const { slug } = useParams()
@@ -15,32 +20,16 @@ export default function ProjectDetail() {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [slug, project])
 
-  const jsonLd = useMemo(() => {
-    if (!project) return []
-    const path = `/projects/${project.slug}`
-    return [
-      { key: 'webpage', data: webPage({ path, name: project.title, description: project.description, type: 'Article' }) },
-      { key: 'breadcrumb', data: breadcrumb([{ name: 'Home', path: '/' }, { name: 'Projects', path: '/projects' }, { name: project.title, path }]) },
-      { key: 'app', data: softwareApplication(project) },
-    ]
-  }, [project])
+  const head = useMemo(() => (project ? routeHead(`/projects/${project.slug}`) : null), [project])
 
-  if (!project) return <Navigate to="/projects" replace />
+  if (!project || !head) return <Navigate to="/projects" replace />
 
-  const idx = projects.findIndex((p) => p.slug === project.slug)
-  const next = projects[(idx + 1) % projects.length]
-  const hidden = Boolean(project.hidden)
+  const idx = published.findIndex((p) => p.slug === project.slug)
+  const next = published[(idx + 1) % published.length]
 
   return (
     <div className="work-page case-page">
-      <Seo
-        titleFull={`${project.title} — Nevrest Labs`}
-        description={project.short}
-        path={`/projects/${project.slug}`}
-        image={project.cover}
-        noindex={hidden}
-        jsonLd={jsonLd}
-      />
+      <Seo {...head} />
       <section className={`case-hero case-hero--${project.accent}`}>
         <Nav />
         <div className="shell case-hero-inner">

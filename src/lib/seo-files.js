@@ -4,6 +4,7 @@
 
 import { createHash } from 'node:crypto'
 
+import images from '../data/images.json' with { type: 'json' }
 import { clients } from '../data/clients.js'
 import {
   deliveryModels,
@@ -16,7 +17,8 @@ import {
   site,
   technologies,
 } from '../data/site.js'
-import { absolute, faqPage, jsonLdScript, projectList, siteGraph } from './schema.js'
+import { routeHead } from './route-head.js'
+import { absolute, jsonLdScript, pageGraph } from './schema.js'
 
 // Cloudflare Pages `_headers`. CSP script hashes are derived from the same JSON-LD
 // nodes schemaTags() emits, so the strict policy always matches what we ship and
@@ -56,7 +58,32 @@ export function securityHeaders() {
   Cache-Control: public, max-age=31536000, immutable
   Expires: Fri, 01 Jan 2032 00:00:00 GMT
 
-/logo.png
+/logo-512.webp
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/logo-mark.webp
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/og-card.png
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+# Icons and the share card only change when someone regenerates the images.
+/favicon.svg
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/icon-192.png
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/icon-512.png
+  Cache-Control: public, max-age=2592000
+  Expires: Sat, 01 Jan 2028 00:00:00 GMT
+
+/apple-touch-icon.png
   Cache-Control: public, max-age=2592000
   Expires: Sat, 01 Jan 2028 00:00:00 GMT
 
@@ -64,6 +91,8 @@ export function securityHeaders() {
   Cache-Control: public, max-age=2592000
   Expires: Sat, 01 Jan 2028 00:00:00 GMT
 
+# Site art keeps stable filenames and only changes when the images are
+# regenerated, so a one-month cache is a safe balance.
 /work/*
   Cache-Control: public, max-age=2592000
   Expires: Sat, 01 Jan 2028 00:00:00 GMT
@@ -109,11 +138,16 @@ export function redirectsFile() {
   // `html_handling: "none"` in wrangler.jsonc means Cloudflare never resolves
   // `/` to /index.html on its own, so the root is listed here explicitly like
   // every other route. Without this rule the homepage returns a 404.
-  const rewrites = routes
-    .flatMap(({ path }) => (path === '/' ? ['/'] : [path, `${path}/`]))
-    .map((path) => `${path} /index.html 200`)
+  //
+  // Each route rewrites to *its own* prerendered document, not to a shared
+  // shell. That is what keeps a page's <title>, canonical and body content
+  // matching the URL Google is crawling.
+  const rewrites = routes.flatMap(({ path }) => {
+    const target = path === '/' ? '/index.html' : `${path}/index.html`
+    return (path === '/' ? ['/'] : [path, `${path}/`]).map((from) => `${from} ${target} 200`)
+  })
 
-  return validateRedirects(`# App routes render the SPA shell (200). Unlisted paths fall through to 404.html.
+  return validateRedirects(`# Every app route serves its prerendered HTML (200). Unlisted paths fall through to 404.html.
 ${rewrites.join('\n')}
 `)
 }
@@ -154,175 +188,84 @@ export const routes = [
 
 export const title = pageTitles.home
 
-const tag = (attribute, key, content) => `\n    <meta ${attribute}="${key}" content="${content}" />`
+const tag = (attribute, key, content) => `\n    <meta ${attribute}="${key}" content="${esc(content)}" />`
 const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-/**
- * Static content fallback for the <noscript> block.
- *
- * The app is client-rendered, so a crawler that does not execute JavaScript
- * receives an empty <div id="root">. This renders a real, readable outline of the
- * site — headings as questions, the actual service/project/client data, working
- * internal links — generated from the same modules as the React pages, so the
- * copy cannot drift. This is what a visitor without JavaScript sees.
- */
-export function noscriptFallback() {
-  const shipped = publicProjects()
-  const live = shipped.filter((project) => project.status === 'Live')
+// Dimensions for og:image come from src/data/images.json, written by
+// `npm run images` when the art is (re)generated. Anything not in the manifest
+// falls back to the site's share card, so a missing entry degrades to a correct
+// tag rather than a wrong one.
+function socialImageMeta(path) {
+  const known = images[path]
+  if (known) return known
 
-  const navLinks = [
-    ['/projects', 'Projects'],
-    ['/clients', 'Clients'],
-    ['/how-we-deliver', 'How we deliver'],
-    ['/#contact', 'Contact'],
-  ]
-    .map(([href, label]) => `<a href="${href}">${label}</a>`)
-    .join(' · ')
-
-  const serviceItems = services
-    .map((service) => `<li><b>${esc(service.title)}</b> — ${esc(service.text)}</li>`)
-    .join('\n          ')
-
-  const projectItems = shipped
-    .map(
-      (project) =>
-        `<li><a href="/projects/${esc(project.slug)}"><b>${esc(project.title)}</b></a> (${esc(project.status)}) — ${esc(project.short)}</li>`,
-    )
-    .join('\n          ')
-
-  const clientItems = clients
-    .map((client) => `<li><b>${esc(client.name)}</b> (${esc(client.handle)})</li>`)
-    .join('\n          ')
-
-  const founderItems = founders
-    .map((founder) => `<li><b>${esc(founder.name)}</b> — ${esc(founder.role)}, Nevrest Labs</li>`)
-    .join('\n          ')
-
-  const modelItems = deliveryModels
-    .map((model) => `<li><b>${esc(model.name)}</b> — ${esc(model.blurb)}</li>`)
-    .join('\n          ')
-
-  const faqItems = faqs
-    .map(([question, answer]) => `<h3>${esc(question)}</h3>\n          <p>${esc(answer)}</p>`)
-    .join('\n          ')
-
-  const techLine = technologies.map(([group, ...items]) => `<b>${esc(group)}:</b> ${items.map(esc).join(', ')}`).join(' · ')
-
-  return `
-    <noscript>
-      <div class="ns-fallback">
-        <h1>Nevrest Labs — Software Company in Kathmandu, Nepal</h1>
-        <p>
-          Nevrest Labs is a software company based in ${esc(site.city)}, ${esc(site.country)} (${esc(site.utcOffset)}). We design,
-          build and ship web platforms, mobile apps, AI and machine learning systems, automation tools, backend APIs and custom
-          software for businesses. This page needs JavaScript for its full layout — everything below is the same content in plain
-          HTML, and every link works.
-        </p>
-        <p>
-          <b>At a glance:</b> ${founders.length} co-founders · ${services.length} service lines · ${shipped.length} documented
-          products (${live.length} live) · ${clients.length} client teams · ${industries.length} industries served.
-          Last updated ${esc(site.lastModified)}.
-        </p>
-        <nav aria-label="Main">${navLinks}</nav>
-
-        <h2>What does Nevrest Labs build?</h2>
-        <ul>
-          ${serviceItems}
-        </ul>
-
-        <h2>Who founded Nevrest Labs?</h2>
-        <ul>
-          ${founderItems}
-        </ul>
-
-        <h2>Which products has Nevrest Labs built?</h2>
-        <ul>
-          ${projectItems}
-        </ul>
-
-        <h2>Who does Nevrest Labs work with?</h2>
-        <ul>
-          ${clientItems}
-        </ul>
-
-        <h2>How does Nevrest Labs deliver a project?</h2>
-        <p>
-          Every engagement runs entry, delivery and exit, through three models. One Client Communication lead stays your single
-          point of contact from discovery to handover.
-        </p>
-        <ol>
-          ${modelItems}
-        </ol>
-
-        <h2>Which technologies does Nevrest Labs use?</h2>
-        <p>${techLine}.</p>
-
-        <h2>Which industries does Nevrest Labs work in?</h2>
-        <p>${industries.map(esc).join(', ')}.</p>
-
-        <h2>What do clients ask before starting?</h2>
-        ${faqItems}
-
-        <h2>How do I contact Nevrest Labs?</h2>
-        <p>
-          Email <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>, or find us on
-          <a href="${esc(site.socials[0].url)}">LinkedIn</a>. We are in ${esc(site.city)}, ${esc(site.country)}, working
-          ${esc(site.utcOffset)}.
-        </p>
-        <p>A machine-readable summary of this site is available at <a href="/llms.txt">/llms.txt</a>.</p>
-      </div>
-    </noscript>`
+  return { width: site.shareImageWidth, height: site.shareImageHeight, type: 'image/png' }
 }
 
-export function headMetaTags() {
-  const url = absolute('/')
-  const image = absolute(site.shareImage)
+export function headMetaTags(path = '/') {
+  const head = routeHead(path)
+  const route = head?.path ?? '/'
+  const url = absolute(route)
+  const title = head?.titleFull ?? pageTitles.home
+  const description = head?.description ?? site.metaDescription
+  const image = absolute(head?.image || site.shareImage)
+  const socialImage = socialImageMeta(head?.image || site.shareImage)
+  const robots = head?.noindex
+    ? 'noindex, follow'
+    : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
 
   return [
-    `\n    <title>${title}</title>`,
-    tag('name', 'description', site.metaDescription),
+    `\n    <title>${esc(title)}</title>`,
+    tag('name', 'description', description),
     tag('name', 'keywords', site.keywords.join(', ')),
     tag('name', 'author', site.name),
-    tag('name', 'robots', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'),
-    tag('name', 'googlebot', 'index, follow, max-snippet:-1, max-image-preview:large'),
+    tag('name', 'robots', robots),
+    tag('name', 'googlebot', robots),
     tag('name', 'geo.region', site.geoRegion),
     tag('name', 'geo.placename', site.city),
     tag('name', 'geo.position', site.coordinates.replace(', ', ';')),
     tag('name', 'ICBM', site.coordinates),
+    // Self-referencing canonical for THIS route. Previously hardcoded to "/",
+    // which told Google every page on the site was a duplicate of the homepage.
     `\n    <link rel="canonical" href="${url}" />`,
     `\n    <link rel="alternate" type="text/plain" href="${absolute('/llms.txt')}" title="Plain-text site summary for AI assistants" />`,
     `\n    <link rel="sitemap" type="application/xml" href="${absolute('/sitemap.xml')}" />`,
-    tag('property', 'og:type', 'website'),
+    tag('property', 'og:type', head?.type === 'article' ? 'article' : 'website'),
     tag('property', 'og:site_name', site.name),
     tag('property', 'og:locale', site.locale),
     tag('property', 'og:title', title),
-    tag('property', 'og:description', site.summary),
+    tag('property', 'og:description', description),
     tag('property', 'og:url', url),
     tag('property', 'og:image', image),
-    tag('property', 'og:image:alt', `${site.name} logo`),
-    tag('property', 'og:image:width', String(site.shareImageWidth)),
-    tag('property', 'og:image:height', String(site.shareImageHeight)),
-    tag('property', 'og:image:type', 'image/png'),
+    tag('property', 'og:image:width', String(socialImage.width)),
+    tag('property', 'og:image:height', String(socialImage.height)),
+    tag('property', 'og:image:type', socialImage.type ?? 'image/png'),
+    tag('property', 'og:image:alt', `${title} — ${site.name}`),
     `\n    <link rel="alternate" hreflang="${site.lang}" href="${url}" />`,
     `\n    <link rel="alternate" hreflang="x-default" href="${url}" />`,
     tag('name', 'twitter:card', 'summary_large_image'),
     tag('name', 'twitter:title', title),
-    tag('name', 'twitter:description', site.summary),
+    tag('name', 'twitter:description', description),
     tag('name', 'twitter:image', image),
-    tag('name', 'twitter:image:alt', `${site.name} logo`),
+    tag('name', 'twitter:image:alt', `${title} — ${site.name}`),
   ].join('')
 }
 
-export function schemaTags() {
-  return [jsonLdScript(siteGraph()), jsonLdScript(faqPage(faqs), 'faq'), jsonLdScript(projectList(), 'itemlist')].join('')
+export function schemaTags(path = '/') {
+  return jsonLdScript(pageGraph(routeNodes(path)), 'graph')
 }
 
-// SHA-256 of each inline JSON-LD block this build emits, for CSP script-src.
-// Hashing the nodes themselves (rather than scraping the HTML) keeps the policy
-// exactly in step with schemaTags() above.
+// SHA-256 of each page's JSON-LD graph, for CSP script-src. Hashing the node
+// itself (rather than scraping the built HTML) keeps the policy exactly in step
+// with schemaTags(). One hash per route — see the note on pageGraph().
 export function schemaHashes() {
-  return [siteGraph(), faqPage(faqs), projectList()].map((node) => `'sha256-${createHash('sha256').update(JSON.stringify(node), 'utf8').digest('base64')}'`)
+  return routes.map(({ path }) => {
+    const graph = JSON.stringify(pageGraph(routeNodes(path)))
+    return `'sha256-${createHash('sha256').update(graph, 'utf8').digest('base64')}'`
+  })
 }
+
+const routeNodes = (path) => routeHead(path)?.jsonLd.map(({ data }) => data) ?? []
 
 export function sitemapXml(lastModified = site.lastModified) {
   const urls = routes
